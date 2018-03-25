@@ -33,12 +33,16 @@ export default class ComicBook extends Component {
     this.optionBarIsShow = false
   }
 
+  ref = ref => this.FlatList = ref.getFlatList()
+
+  getItemLayout = (data, index) => (
+    { length: width, offset: width * index, index }
+  )
+
   onScroll= ({nativeEvent}) => {
     this.scrollOffset = nativeEvent.contentOffset.y
     this.contentHeight = nativeEvent.contentSize.height - nativeEvent.layoutMeasurement.height
   }
-
-  ref = ref => this.FlatList = ref.getFlatList()
 
   scrollTop = () => {
     const scrollOffset = this.scrollOffset - height/3 < 0 ? 0 : this.scrollOffset - height/3
@@ -54,6 +58,10 @@ export default class ComicBook extends Component {
       offset: scrollOffset,
       animated: true
     })    
+  }
+
+  scrollIndex = index => {
+    this.FlatList.scrollToIndex({animated: false, index: index})
   }
 
   showToolBar = () => {
@@ -303,7 +311,14 @@ export default class ComicBook extends Component {
 	      </View>
       </TouchableWithoutFeedback>
       <View style={styles.progressSliderView}>
-      	<ComicBookSlider style={styles.progressSlider}/>
+      	<ComicBookSlider 
+          showIndicator
+          style={styles.progressSlider}
+          onSlidingComplete={this.onSlidingComplete}
+          step={1}
+          minimumValue={1}
+          maximumValue={this.props.data.length}
+        />
       </View>
     	<TouchableWithoutFeedback
     		onPress={() => {console.warn('下一話')}}
@@ -327,9 +342,15 @@ export default class ComicBook extends Component {
       <FlatList
         data={this.props.chapter}
         renderItem={({ item }) => 
-          <View style={styles.chapterBarItemView}>
-            <Text style={styles.chapterBarItemText}>{item.title}</Text>
-          </View>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              this.onClickChapterItem(item)
+            }}
+          >
+            <View style={styles.chapterBarItemView}>
+              <Text style={styles.chapterBarItemText}>{item.title}</Text>
+            </View>
+          </TouchableWithoutFeedback>
         }
       />
     </Animated.View> 
@@ -470,69 +491,62 @@ export default class ComicBook extends Component {
   onSingleClickTopArea = () => {
     if (this.toolBarIsShow) {
       this.hideToolBar()
+    } else if (this.sliderBarIsShow) {
+      this.hideSliderBar()
+    } else if (this.chapterBarIsShow) {
+      this.hideChapterBar()
+    } else if (this.configBarIsShow) {
+      this.hideConfigBar()
+    } else if (this.optionBarIsShow) {
+      this.hideOptionBar()
     } else {
-      if (this.sliderBarIsShow) {
-        this.hideSliderBar()
-      } else if (this.chapterBarIsShow) {
-        this.hideChapterBar()
-      } else if (this.configBarIsShow) {
-        this.hideConfigBar()
-      } else if (this.optionBarIsShow) {
-      	this.hideOptionBar()
-      }
+      this.scrollTop()
     }
-    this.scrollTop()
   }
 
   onSingleClickMiddleArea = () => {
     if (this.toolBarIsShow) {
       this.hideToolBar()
+    } else if (this.sliderBarIsShow) {
+      this.hideSliderBar()
+    } else if (this.chapterBarIsShow) {
+      this.hideChapterBar()
+    } else if (this.configBarIsShow) {
+      this.hideConfigBar()
+    } else if (this.optionBarIsShow) {
+      this.hideOptionBar()
     } else {
-      if (this.sliderBarIsShow) {
-        this.hideSliderBar()
-      } else if (this.chapterBarIsShow) {
-        this.hideChapterBar()
-      } else if (this.configBarIsShow) {
-        this.hideConfigBar()
-      } else if (this.optionBarIsShow) {
-      	this.hideOptionBar()
-      }
-      else {
-        this.showToolBar()
-      }
+      this.showToolBar()
     }
   }
 
   onSingleClickBottomArea = () => {
     if (this.toolBarIsShow) {
       this.hideToolBar()
+    } else if (this.sliderBarIsShow) {
+      this.hideSliderBar()
+    } else if (this.chapterBarIsShow) {
+      this.hideChapterBar()
+    } else if (this.configBarIsShow) {
+      this.hideConfigBar()
+    } else if (this.optionBarIsShow) {
+      this.hideOptionBar()
     } else {
-      if (this.sliderBarIsShow) {
-        this.hideSliderBar()
-      } else if (this.chapterBarIsShow) {
-        this.hideChapterBar()
-      } else if (this.configBarIsShow) {
-        this.hideConfigBar()
-      } else if (this.optionBarIsShow) {
-      	this.hideOptionBar()
-      }
+      this.scrollBottom()
     }
-    this.scrollBottom()
   }
 
   onScrollBeginDrag = () => {
     if (this.toolBarIsShow) {
       this.hideToolBar()
-    } else {
-      if (this.sliderBarIsShow) {
-        this.hideSliderBar()
-      } else if (this.chapterBarIsShow) {
-        this.hideChapterBar()
-      } else if (this.configBarIsShow) {
-        this.hideConfigBar()
-      } else if (this.optionBarIsShow) {
-      	this.hideOptionBar()
-      }
+    } else if (this.sliderBarIsShow) {
+      this.hideSliderBar()
+    } else if (this.chapterBarIsShow) {
+      this.hideChapterBar()
+    } else if (this.configBarIsShow) {
+      this.hideConfigBar()
+    } else if (this.optionBarIsShow) {
+      this.hideOptionBar()
     }
   }
 
@@ -556,6 +570,14 @@ export default class ComicBook extends Component {
   	this.showOptionBar()
   }
 
+  onClickChapterItem = item => {
+    this.scrollIndex(item.startPage - 1)
+  }
+
+  onSlidingComplete = value => {
+    this.scrollIndex(value -1 )
+  }
+
   render() {
     return (
       <View style={styles.view}>
@@ -563,6 +585,7 @@ export default class ComicBook extends Component {
           ref={this.ref}
           data={this.props.data}
           renderItem={this.renderItem}
+          getItemLayout={this.getItemLayout}
           onSingleClickTopArea={this.onSingleClickTopArea}
           onSingleClickMiddleArea={this.onSingleClickMiddleArea}
           onSingleClickBottomArea={this.onSingleClickBottomArea}
