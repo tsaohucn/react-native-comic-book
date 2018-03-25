@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import {
   StyleSheet,
   Text,
@@ -22,11 +23,12 @@ export default class ComicBook extends Component {
     this.animatedTopToolBarY = new Animated.Value(-50, { useNativeDriver: true })
     this.animatedBottomToolBarY = new Animated.Value(50, { useNativeDriver: true })
     this.animatedSliderBarY = new Animated.Value(50, { useNativeDriver: true })
-    this.animatedChapterX =  new Animated.Value(chapterBarWidth, { useNativeDriver: true })
-    //this.isAnimated = false
+    this.animatedChapterBarX =  new Animated.Value(chapterBarWidth, { useNativeDriver: true })
+    this.animatedConfigBarY =  new Animated.Value(configBarHeight, { useNativeDriver: true })
     this.toolBarIsShow = false
     this.sliderBarIsShow = false
-
+    this.chapterBarIsShow = false
+    this.configBarIsShow = false
   }
 
   onScroll= ({nativeEvent}) => {
@@ -86,6 +88,17 @@ export default class ComicBook extends Component {
     })
   }
 
+  showSliderBar = () => {
+    Animated.timing(this.animatedSliderBarY,{
+      toValue: 0,
+      duration: 200
+    }).start(result => {
+      if (result.finished) {
+        this.sliderBarIsShow = true
+      } 
+    })
+  }
+
   hideSliderBar = () => {
     Animated.timing(this.animatedSliderBarY,{
       toValue: 50,
@@ -93,6 +106,50 @@ export default class ComicBook extends Component {
     }).start(result => {
       if (result.finished) {
         this.sliderBarIsShow = false
+      } 
+    })
+  }
+
+  showChapterBar = () => {
+    Animated.timing(this.animatedChapterBarX,{
+      toValue: 0,
+      duration: 200
+    }).start(result => {
+      if (result.finished) {
+        this.chapterBarIsShow = true
+      } 
+    })    
+  }
+
+  hideChapterBar = () => {
+    Animated.timing(this.animatedChapterBarX,{
+      toValue: chapterBarWidth,
+      duration: 200
+    }).start(result => {
+      if (result.finished) {
+        this.chapterBarIsShow = false
+      } 
+    })     
+  }
+
+  showConfigBar = () => {
+    Animated.timing(this.animatedConfigBarY,{
+      toValue: 0,
+      duration: 200
+    }).start(result => {
+      if (result.finished) {
+        this.configBarIsShow = true
+      } 
+    })
+  }
+
+  hideConfigBar = () => {
+    Animated.timing(this.animatedConfigBarY,{
+      toValue: configBarHeight,
+      duration: 200
+    }).start(result => {
+      if (result.finished) {
+        this.configBarIsShow = false
       } 
     })
   }
@@ -111,7 +168,7 @@ export default class ComicBook extends Component {
       ]}]}
     >
       <TouchableWithoutFeedback
-        onPress={() => console.warn('返回')} 
+        onPress={this.props.onClickBackArrow} 
       >
         <Icon
           iconStyle={styles.topToolBarLeftIcon}
@@ -189,7 +246,7 @@ export default class ComicBook extends Component {
           </View> 
         </TouchableWithoutFeedback> 
         <TouchableWithoutFeedback
-          onPress={() => console.warn('設定')} 
+          onPress={this.onClickConfigBar} 
         >
           <View style={styles.bottomToolBarItemView}>
             <Icon
@@ -205,7 +262,7 @@ export default class ComicBook extends Component {
 
 
   renderSliderBar = () => 
-    <Animated.View style={[styles.bottomTool,{
+    <Animated.View style={[styles.bottomToolBar,{
       transform: [
         { translateY: this.animatedSliderBarY }
       ]}]}
@@ -216,7 +273,7 @@ export default class ComicBook extends Component {
   renderChapterBar = () => 
     <Animated.View style={[styles.chapterBar,{
       transform: [
-        { translateX: this.animatedChapterX }
+        { translateX: this.animatedChapterBarX }
       ]}]}
     >
       <FlatList
@@ -229,6 +286,14 @@ export default class ComicBook extends Component {
       />
     </Animated.View> 
 
+  renderConfigBar = () => 
+    <Animated.View style={[styles.configBar,{
+      transform: [
+        { translateY: this.animatedConfigBarY }
+      ]}]}
+    >
+
+    </Animated.View>
 
   onSingleClickTopArea = () => {
     if (this.toolBarIsShow) {
@@ -236,6 +301,10 @@ export default class ComicBook extends Component {
     } else {
       if (this.sliderBarIsShow) {
         this.hideSliderBar()
+      } else if (this.chapterBarIsShow) {
+        this.hideChapterBar()
+      } else if (this.configBarIsShow) {
+        this.hideConfigBar()
       }
     }
     this.scrollTop()
@@ -247,7 +316,12 @@ export default class ComicBook extends Component {
     } else {
       if (this.sliderBarIsShow) {
         this.hideSliderBar()
-      } else {
+      } else if (this.chapterBarIsShow) {
+        this.hideChapterBar()
+      } else if (this.configBarIsShow) {
+        this.hideConfigBar()
+      }
+      else {
         this.showToolBar()
       }
     }
@@ -259,17 +333,13 @@ export default class ComicBook extends Component {
     } else {
       if (this.sliderBarIsShow) {
         this.hideSliderBar()
+      } else if (this.chapterBarIsShow) {
+        this.hideChapterBar()
+      } else if (this.configBarIsShow) {
+        this.hideConfigBar()
       }
     }
     this.scrollBottom()
-  }
-
-  onClickSliderBar = () => {
-    console.warn('onClickSliderBar')
-  }
-
-  onClickChapterBar = () => {
-    console.warn('onClickChapterBar')
   }
 
   onScrollBeginDrag = () => {
@@ -278,8 +348,27 @@ export default class ComicBook extends Component {
     } else {
       if (this.sliderBarIsShow) {
         this.hideSliderBar()
+      } else if (this.chapterBarIsShow) {
+        this.hideChapterBar()
+      } else if (this.configBarIsShow) {
+        this.hideConfigBar()
       }
     }
+  }
+
+  onClickSliderBar = () => {
+    this.hideToolBar()
+    this.showSliderBar()
+  }
+
+  onClickChapterBar = () => {
+    this.hideToolBar()
+    this.showChapterBar()
+  }
+
+  onClickConfigBar = () => {
+    this.hideToolBar()
+    this.showConfigBar()
   }
 
   render() {
@@ -299,14 +388,28 @@ export default class ComicBook extends Component {
           { this.renderBottomToolBar() }
           { this.renderSliderBar() }
           { this.renderChapterBar() }
+          { this.renderConfigBar() }
       </View>
     )
   }
 }
 
+ComicBook.propTypes = {
+  data: PropTypes.array,
+  chapter: PropTypes.array,
+  onClickBackArrow: PropTypes.func,
+}
+
+ComicBook.defaultProps = {
+  data: [],
+  chapter: []
+}
+
 const { width, height } = Dimensions.get('window')
 
 const chapterBarWidth = width*2/3
+
+const configBarHeight = height*1/3
 
 const styles = StyleSheet.create({
   view: {
@@ -344,8 +447,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around'
   },
   bottomToolBarItemView: {
-    height: 50,
-    justifyContent: 'center'
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   bottomToolBarItemText: {
     color: 'white'
@@ -368,5 +472,12 @@ const styles = StyleSheet.create({
   chapterBarItemText: {
     fontSize: 15,
     color: 'white'
+  },
+  configBar: {
+    position: 'absolute', 
+    height: configBarHeight,
+    width,
+    backgroundColor: 'rgba(52, 52, 52, 0.8)',
+    bottom: 0     
   }
 })
