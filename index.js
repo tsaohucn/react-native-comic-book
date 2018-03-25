@@ -5,7 +5,8 @@ import {
   View,
   Dimensions,
   Animated,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  FlatList
 } from 'react-native'
 import InteractiveFlatList from 'react-native-interactive-flatList'
 import { Icon } from 'react-native-elements'
@@ -21,6 +22,26 @@ export default class ComicBook extends Component {
     this.animatedTopToolBarY = new Animated.Value(-50, { useNativeDriver: true })
     this.animatedBottomToolBarY = new Animated.Value(50, { useNativeDriver: true })
     this.animatedSliderBarY = new Animated.Value(50, { useNativeDriver: true })
+    this.animatedChapterX =  new Animated.Value(chapterWidth, { useNativeDriver: true })
+  }
+
+  showChapter = () => {
+    if (this.animatedChapterX._value) {
+      Animated.parallel([
+        Animated.timing(this.animatedTopToolBarY,{
+          toValue: -50,
+          duration: 200
+        }),
+        Animated.timing(this.animatedBottomToolBarY,{
+          toValue: 50,
+          duration: 200
+        }),
+        Animated.timing(this.animatedSliderBarY,{
+          toValue: 0,
+          duration: 200
+        })
+      ]).start()
+    } 
   }
 
   showSliderBar = () => {
@@ -81,7 +102,7 @@ export default class ComicBook extends Component {
         </View> 
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback
-        onPress={() => console.warn('目錄')} 
+        onPress={this.showChapter} 
       >
         <View style={styles.bottomToolBarComponent}>
           <Icon
@@ -159,6 +180,23 @@ export default class ComicBook extends Component {
     >
       <ComicBookSlider/>
     </Animated.View>
+
+  renderChapter = () => 
+    <Animated.View style={[styles.chapter,{
+      transform: [
+        { translateX: this.animatedChapterX }
+      ]}]}
+    >
+      <FlatList
+        data={this.props.chapter}
+        renderItem={this.renderChapterItem}
+      />
+    </Animated.View> 
+
+  renderChapterItem = ({ item }) => 
+    <View style={styles.renderChapterItem}>
+      <Text style={styles.renderChapterItemText}>{item.title}</Text>
+    </View>
 
   onSingleClickTopArea = () => {
     if (this.animatedTopToolBarY._value === 0 && this.animatedBottomToolBarY._value === 0) {
@@ -283,12 +321,15 @@ export default class ComicBook extends Component {
           { this.renderTopToolBar() }
           { this.renderBottomToolBar() }
           { this.renderSliderBar() }
+          { this.renderChapter() }
       </View>
     )
   }
 }
 
 const { width, height } = Dimensions.get('window')
+
+const chapterWidth = width*2/3
 
 const styles = StyleSheet.create({
   view: {
@@ -332,5 +373,24 @@ const styles = StyleSheet.create({
   },
   topRightIcon: {
     paddingRight: 10
+  },
+  chapter: {
+    position: 'absolute', 
+    top: 0,
+    right: 0,
+    height,
+    width: chapterWidth,
+    backgroundColor: 'rgba(52, 52, 52, 0.8)',
+    paddingLeft: 10
+  },
+  renderChapterItem: {
+    height: height/9,
+    borderBottomColor: 'rgba(192,192,192,0.3)',
+    borderBottomWidth: 0.3,
+    justifyContent: 'center'
+  },
+  renderChapterItemText: {
+    fontSize: 15,
+    color: 'white'
   }
 })
