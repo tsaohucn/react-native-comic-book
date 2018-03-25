@@ -22,153 +22,185 @@ export default class ComicBook extends Component {
     this.animatedTopToolBarY = new Animated.Value(-50, { useNativeDriver: true })
     this.animatedBottomToolBarY = new Animated.Value(50, { useNativeDriver: true })
     this.animatedSliderBarY = new Animated.Value(50, { useNativeDriver: true })
-    this.animatedChapterX =  new Animated.Value(chapterWidth, { useNativeDriver: true })
+    this.animatedChapterX =  new Animated.Value(chapterBarWidth, { useNativeDriver: true })
+    //this.isAnimated = false
+    this.toolBarIsShow = false
+    this.sliderBarIsShow = false
+
   }
 
-  showChapter = () => {
-    if (this.animatedChapterX._value) {
-      Animated.parallel([
-        Animated.timing(this.animatedTopToolBarY,{
-          toValue: -50,
-          duration: 200
-        }),
-        Animated.timing(this.animatedBottomToolBarY,{
-          toValue: 50,
-          duration: 200
-        }),
-        Animated.timing(this.animatedSliderBarY,{
-          toValue: 0,
-          duration: 200
-        })
-      ]).start()
-    } 
+  onScroll= ({nativeEvent}) => {
+    this.scrollOffset = nativeEvent.contentOffset.y
+    this.contentHeight = nativeEvent.contentSize.height - nativeEvent.layoutMeasurement.height
   }
 
-  showSliderBar = () => {
-    if (this.animatedTopToolBarY._value === 0 && this.animatedBottomToolBarY._value === 0) {
-      Animated.parallel([
-        Animated.timing(this.animatedTopToolBarY,{
-          toValue: -50,
-          duration: 200
-        }),
-        Animated.timing(this.animatedBottomToolBarY,{
-          toValue: 50,
-          duration: 200
-        }),
-        Animated.timing(this.animatedSliderBarY,{
-          toValue: 0,
-          duration: 200
-        })
-      ]).start()
-    }    
+  ref = ref => this.FlatList = ref.getFlatList()
+
+  scrollTop = () => {
+    const scrollOffset = this.scrollOffset - height/3 < 0 ? 0 : this.scrollOffset - height/3
+    this.FlatList.scrollToOffset({
+      offset: scrollOffset,
+      animated: true
+    })    
   }
 
-  renderTopToolBarLeftComponent = () => 
-    <TouchableWithoutFeedback
-      onPress={() => console.warn('返回')} 
-    >
-      <Icon
-        iconStyle={styles.topLeftIcon}
-        name='arrow-left'
-        type='material-community'
-        color='white'
-      />
-    </TouchableWithoutFeedback>
+  scrollBottom = () => {
+    const scrollOffset = this.scrollOffset + height/3 > this.contentHeight ? this.contentHeight :this.scrollOffset + height/3
+    this.FlatList.scrollToOffset({
+      offset: scrollOffset,
+      animated: true
+    })    
+  }
 
-    renderTopToolBarRightComponent = () => 
-    <TouchableWithoutFeedback
-      onPress={() => console.warn('更多選項')} 
-    >
-      <Icon
-        iconStyle={styles.topRightIcon}
-        name='dots-horizontal'
-        type='material-community'
-        color='white'
-      />
-    </TouchableWithoutFeedback>
+  showToolBar = () => {
+    Animated.parallel([
+      Animated.timing(this.animatedTopToolBarY,{
+        toValue: 0,
+        duration: 200
+      }),
+      Animated.timing(this.animatedBottomToolBarY,{
+        toValue: 0,
+        duration: 200
+      })
+    ]).start(result => {
+      if (result.finished) {
+        this.toolBarIsShow = true
+      }
+    })    
+  }
 
-  renderBottomToolBarComponent = () => 
-    <View style={styles.renderBottomToolBarComponent}>
-      <TouchableWithoutFeedback
-        onPress={() => console.warn('發彈幕')} 
-      >
-        <View style={styles.bottomToolBarComponent}>
-          <Icon
-            name='radio-tower'
-            type='material-community'
-            color='white'
-          />
-          <Text style={styles.text}>發彈幕</Text> 
-        </View> 
-      </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback
-        onPress={this.showChapter} 
-      >
-        <View style={styles.bottomToolBarComponent}>
-          <Icon
-            name='view-headline'
-            type='material-community'
-            color='white'
-          />
-          <Text style={styles.text}>目錄</Text> 
-        </View>
-      </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback
-        onPress={this.showSliderBar} 
-      >
-        <View style={styles.bottomToolBarComponent}>
-          <Icon
-            name='toggle-switch'
-            type='material-community'
-            color='white'
-          />
-          <Text style={styles.text}>進度</Text> 
-        </View>
-      </TouchableWithoutFeedback> 
-      <TouchableWithoutFeedback
-        onPress={() => console.warn('夜間')} 
-      >
-        <View style={styles.bottomToolBarComponent}>
-          <Icon
-            name='shield-half-full'
-            type='material-community'
-            color='white'
-          />
-          <Text style={styles.text}>夜間</Text> 
-        </View> 
-      </TouchableWithoutFeedback> 
-      <TouchableWithoutFeedback
-        onPress={() => console.warn('設定')} 
-      >
-        <View style={styles.bottomToolBarComponent}>
-          <Icon
-            name='video-input-component'
-            type='material-community'
-            color='white'
-          />
-          <Text style={styles.text}>設定</Text> 
-        </View>
-      </TouchableWithoutFeedback> 
-    </View>
+  hideToolBar = () => {
+    Animated.parallel([
+      Animated.timing(this.animatedTopToolBarY,{
+        toValue: -50,
+        duration: 200
+      }),
+      Animated.timing(this.animatedBottomToolBarY,{
+        toValue: 50,
+        duration: 200
+      })
+    ]).start(result => {
+      if (result.finished) {
+        this.toolBarIsShow = false
+      }
+    })
+  }
+
+  hideSliderBar = () => {
+    Animated.timing(this.animatedSliderBarY,{
+      toValue: 50,
+      duration: 200
+    }).start(result => {
+      if (result.finished) {
+        this.sliderBarIsShow = false
+      } 
+    })
+  }
+
+  renderItem = ({ item }) => 
+    <ComicBookImage
+      resizeMode={'contain'} 
+      style={{width, height: width, backgroundColor: 'black'}}
+      source={{uri: item.uri}}
+    />
 
   renderTopToolBar = () =>  
-    <Animated.View style={[styles.topTool,{
+    <Animated.View style={[styles.topToolBar,{
       transform: [
         { translateY: this.animatedTopToolBarY  }
       ]}]}
     >
-      { this.renderTopToolBarLeftComponent() }
-      <Text style={styles.text}>{'第一話'}</Text>
-      { this.renderTopToolBarRightComponent() }
+      <TouchableWithoutFeedback
+        onPress={() => console.warn('返回')} 
+      >
+        <Icon
+          iconStyle={styles.topToolBarLeftIcon}
+          name='arrow-left'
+          type='material-community'
+          color='white'
+        />
+      </TouchableWithoutFeedback>
+      <Text style={styles.titleText}>{'第一話'}</Text>
+      <TouchableWithoutFeedback
+        onPress={() => console.warn('更多選項')} 
+      >
+        <Icon
+          iconStyle={styles.topToolBarRightIcon}
+          name='dots-horizontal'
+          type='material-community'
+          color='white'
+        />
+      </TouchableWithoutFeedback>
     </Animated.View>
 
   renderBottomToolBar = () => 
-    <Animated.View style={[styles.bottomTool,{
+    <Animated.View style={[styles.bottomToolBar,{
       transform: [
         { translateY: this.animatedBottomToolBarY }
       ]}]}
     >
-      { this.renderBottomToolBarComponent() }
+      <View style={styles.bottomToolBarView}>
+        <TouchableWithoutFeedback
+          onPress={() => console.warn('發彈幕')} 
+        >
+          <View style={styles.bottomToolBarItemView}>
+            <Icon
+              name='radio-tower'
+              type='material-community'
+              color='white'
+            />
+            <Text style={styles.bottomToolBarItemText}>發彈幕</Text> 
+          </View> 
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
+          onPress={this.onClickChapterBar} 
+        >
+          <View style={styles.bottomToolBarItemView}>
+            <Icon
+              name='view-headline'
+              type='material-community'
+              color='white'
+            />
+            <Text style={styles.bottomToolBarItemText}>目錄</Text> 
+          </View>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
+          onPress={this.onClickSliderBar} 
+        >
+          <View style={styles.bottomToolBarItemView}>
+            <Icon
+              name='toggle-switch'
+              type='material-community'
+              color='white'
+            />
+            <Text style={styles.bottomToolBarItemText}>進度</Text> 
+          </View>
+        </TouchableWithoutFeedback> 
+        <TouchableWithoutFeedback
+          onPress={() => console.warn('夜間')} 
+        >
+          <View style={styles.bottomToolBarItemView}>
+            <Icon
+              name='shield-half-full'
+              type='material-community'
+              color='white'
+            />
+            <Text style={styles.bottomToolBarItemText}>夜間</Text> 
+          </View> 
+        </TouchableWithoutFeedback> 
+        <TouchableWithoutFeedback
+          onPress={() => console.warn('設定')} 
+        >
+          <View style={styles.bottomToolBarItemView}>
+            <Icon
+              name='video-input-component'
+              type='material-community'
+              color='white'
+            />
+            <Text style={styles.bottomToolBarItemText}>設定</Text> 
+          </View>
+        </TouchableWithoutFeedback> 
+      </View>
     </Animated.View>
 
 
@@ -181,129 +213,74 @@ export default class ComicBook extends Component {
       <ComicBookSlider/>
     </Animated.View>
 
-  renderChapter = () => 
-    <Animated.View style={[styles.chapter,{
+  renderChapterBar = () => 
+    <Animated.View style={[styles.chapterBar,{
       transform: [
         { translateX: this.animatedChapterX }
       ]}]}
     >
       <FlatList
         data={this.props.chapter}
-        renderItem={this.renderChapterItem}
+        renderItem={({ item }) => 
+          <View style={styles.chapterBarItemView}>
+            <Text style={styles.chapterBarItemText}>{item.title}</Text>
+          </View>
+        }
       />
     </Animated.View> 
 
-  renderChapterItem = ({ item }) => 
-    <View style={styles.renderChapterItem}>
-      <Text style={styles.renderChapterItemText}>{item.title}</Text>
-    </View>
 
   onSingleClickTopArea = () => {
-    if (this.animatedTopToolBarY._value === 0 && this.animatedBottomToolBarY._value === 0) {
-      Animated.parallel([
-        Animated.timing(this.animatedTopToolBarY,{
-          toValue: -50,
-          duration: 200
-        }),
-        Animated.timing(this.animatedBottomToolBarY,{
-          toValue: 50,
-          duration: 200
-        }),
-        Animated.timing(this.animatedSliderBarY,{
-          toValue: 50,
-          duration: 200
-        })
-      ]).start()
+    if (this.toolBarIsShow) {
+      this.hideToolBar()
+    } else {
+      if (this.sliderBarIsShow) {
+        this.hideSliderBar()
+      }
     }
-    const scrollOffset = this.scrollOffset - height/3 < 0 ? 0 : this.scrollOffset - height/3
-    this.FlatList.scrollToOffset({
-      offset: scrollOffset,
-      animated: true
-    })
+    this.scrollTop()
   }
 
   onSingleClickMiddleArea = () => {
-    if (this.animatedTopToolBarY._value === 0 && this.animatedBottomToolBarY._value === 0) {
-      Animated.parallel([
-        Animated.timing(this.animatedTopToolBarY,{
-          toValue: -50,
-          duration: 200
-        }),
-        Animated.timing(this.animatedBottomToolBarY,{
-          toValue: 50,
-          duration: 200
-        }),
-        Animated.timing(this.animatedSliderBarY,{
-          toValue: 50,
-          duration: 200
-        })
-      ]).start()
+    if (this.toolBarIsShow) {
+      this.hideToolBar()
     } else {
-      Animated.parallel([
-        Animated.timing(this.animatedTopToolBarY,{
-          toValue: 0,
-          duration: 200
-        }),
-        Animated.timing(this.animatedBottomToolBarY,{
-          toValue: 0,
-          duration: 200
-        }),
-        Animated.timing(this.animatedSliderBarY,{
-          toValue: 50,
-          duration: 200
-        })
-      ]).start()          
+      if (this.sliderBarIsShow) {
+        this.hideSliderBar()
+      } else {
+        this.showToolBar()
+      }
     }
   }
 
   onSingleClickBottomArea = () => {
-    if (this.animatedTopToolBarY._value === 0 && this.animatedBottomToolBarY._value === 0) {
-      Animated.parallel([
-        Animated.timing(this.animatedTopToolBarY,{
-          toValue: -50,
-          duration: 200,
-        }),
-        Animated.timing(this.animatedBottomToolBarY,{
-          toValue: 50,
-          duration: 200
-        })
-      ]).start() 
+    if (this.toolBarIsShow) {
+      this.hideToolBar()
+    } else {
+      if (this.sliderBarIsShow) {
+        this.hideSliderBar()
+      }
     }
-    const scrollOffset = this.scrollOffset + height/3 > this.contentHeight ? this.contentHeight :this.scrollOffset + height/3
-    this.FlatList.scrollToOffset({
-      offset: scrollOffset,
-      animated: true
-    })
+    this.scrollBottom()
+  }
+
+  onClickSliderBar = () => {
+    console.warn('onClickSliderBar')
+  }
+
+  onClickChapterBar = () => {
+    console.warn('onClickChapterBar')
   }
 
   onScrollBeginDrag = () => {
-    if (this.animatedTopToolBarY._value === 0 && this.animatedBottomToolBarY._value === 0) {
-      Animated.parallel([
-        Animated.timing(this.animatedTopToolBarY,{
-          toValue: -50,
-          duration: 200,
-        }),
-        Animated.timing(this.animatedBottomToolBarY,{
-          toValue: 50,
-          duration: 200,
-          })
-      ]).start() 
+    if (this.toolBarIsShow) {
+      this.hideToolBar()
+    } else {
+      if (this.sliderBarIsShow) {
+        this.hideSliderBar()
+      }
     }
   }
-
-  onScroll= ({nativeEvent}) => {
-    this.scrollOffset = nativeEvent.contentOffset.y
-    this.contentHeight = nativeEvent.contentSize.height - nativeEvent.layoutMeasurement.height
-  }
-
-  ref = ref => this.FlatList = ref.getFlatList()
-
-  renderItem = ({ item }) => 
-    <ComicBookImage
-      resizeMode={'contain'} 
-      style={{width, height: width, backgroundColor: 'black'}}
-      source={{uri: item.uri}}
-    />
 
   render() {
     return (
@@ -321,7 +298,7 @@ export default class ComicBook extends Component {
           { this.renderTopToolBar() }
           { this.renderBottomToolBar() }
           { this.renderSliderBar() }
-          { this.renderChapter() }
+          { this.renderChapterBar() }
       </View>
     )
   }
@@ -329,29 +306,16 @@ export default class ComicBook extends Component {
 
 const { width, height } = Dimensions.get('window')
 
-const chapterWidth = width*2/3
+const chapterBarWidth = width*2/3
 
 const styles = StyleSheet.create({
   view: {
     flex: 1
   },
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-  text: {
+  titleText: {
     color: 'white'
   },
-  renderBottomToolBarComponent: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around'
-  },
-  bottomToolBarComponent: {
-    height: 50,
-    justifyContent: 'center'
-  },
-  topTool: {
+  topToolBar: {
     position: 'absolute', 
     top: 0,
     height: 50,
@@ -361,35 +325,47 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center'
   },
-  bottomTool: {
+  topToolBarLeftIcon: {
+    paddingLeft: 10
+  },
+  topToolBarRightIcon: {
+    paddingRight: 10
+  },
+  bottomToolBar: {
     position: 'absolute', 
     height: 50,
     width,
     backgroundColor: 'rgba(52, 52, 52, 0.8)',
     bottom: 0    
   },
-  topLeftIcon: {
-    paddingLeft: 10
+  bottomToolBarView: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around'
   },
-  topRightIcon: {
-    paddingRight: 10
+  bottomToolBarItemView: {
+    height: 50,
+    justifyContent: 'center'
   },
-  chapter: {
+  bottomToolBarItemText: {
+    color: 'white'
+  },
+  chapterBar: {
     position: 'absolute', 
     top: 0,
     right: 0,
     height,
-    width: chapterWidth,
+    width: chapterBarWidth,
     backgroundColor: 'rgba(52, 52, 52, 0.8)',
     paddingLeft: 10
   },
-  renderChapterItem: {
+  chapterBarItemView: {
     height: height/9,
     borderBottomColor: 'rgba(192,192,192,0.3)',
     borderBottomWidth: 0.3,
     justifyContent: 'center'
   },
-  renderChapterItemText: {
+  chapterBarItemText: {
     fontSize: 15,
     color: 'white'
   }
