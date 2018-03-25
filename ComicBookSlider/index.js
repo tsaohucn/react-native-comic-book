@@ -1,5 +1,5 @@
 import React , { Component } from 'react'
-import { View, Dimensions, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { Slider } from 'react-native-elements'
 
 export default class ComicBookSlider extends Component {
@@ -15,7 +15,7 @@ export default class ComicBookSlider extends Component {
     return(
       <View style={styles.renderSliderBar}>
         <Slider
-          style={styles.slider}
+          style={this.props.style}
           trackStyle={styles.trackStyle}
           value={this.state.value}
           onValueChange={(value) => {
@@ -30,12 +30,7 @@ export default class ComicBookSlider extends Component {
   }
 }
 
-const { width, height } = Dimensions.get('window')
-
 const styles = StyleSheet.create({
-  slider: {
-    width: width*0.8
-  },
   trackStyle: {
     height: 2
   },
