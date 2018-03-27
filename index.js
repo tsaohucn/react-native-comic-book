@@ -7,17 +7,25 @@ import {
   Dimensions,
   Animated,
   TouchableWithoutFeedback,
-  FlatList
+  FlatList,
+  Platform,
 } from 'react-native'
-import InteractiveFlatList from 'react-native-interactive-flatList'
 import { Icon } from 'react-native-elements'
+import DeviceBrightness from 'react-native-device-brightness'
+import ScreenBrightness from 'react-native-screen-brightness'
+import InteractiveFlatList from 'react-native-interactive-flatList'
 import ComicBookImage from './ComicBookImage'
 import ComicBookSlider from './ComicBookSlider'
+import ComicBookSwitch from './ComicBookSwitch'
+import ComicBookBrightness from './ComicBookBrightness'
 
 export default class ComicBook extends Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      britness: 0
+    }
     this.scrollOffset = 0
     this.contentHeight = height
     this.animatedTopToolBarY = new Animated.Value(-50, { useNativeDriver: true })
@@ -61,6 +69,7 @@ export default class ComicBook extends Component {
   }
 
   scrollIndex = index => {
+    this.hideChapterBar()
     this.FlatList.scrollToIndex({animated: false, index: index})
   }
 
@@ -202,23 +211,27 @@ export default class ComicBook extends Component {
       <TouchableWithoutFeedback
         onPress={this.props.onClickBackArrow} 
       >
-        <Icon
-          iconStyle={styles.topToolBarLeftIcon}
-          name='arrow-left'
-          type='material-community'
-          color='white'
-        />
+        <View style={styles.topToolBarView}>
+          <Icon
+            iconStyle={styles.topToolBarIcon}
+            name='arrow-left'
+            type='material-community'
+            color='white'
+          />
+        </View>
       </TouchableWithoutFeedback>
       <Text style={styles.titleText}>{'第一話'}</Text>
       <TouchableWithoutFeedback
         onPress={this.onClickOptionBar} 
       >
-        <Icon
-          iconStyle={styles.topToolBarRightIcon}
-          name='dots-horizontal'
-          type='material-community'
-          color='white'
-        />
+        <View style={styles.topToolBarView}>
+          <Icon
+            iconStyle={styles.topToolBarIcon}
+            name='dots-horizontal'
+            type='material-community'
+            color='white'
+          />
+        </View>
       </TouchableWithoutFeedback>
     </Animated.View>
 
@@ -265,18 +278,7 @@ export default class ComicBook extends Component {
             <Text style={styles.iconText}>進度</Text> 
           </View>
         </TouchableWithoutFeedback> 
-        <TouchableWithoutFeedback
-          onPress={() => console.warn('夜間')} 
-        >
-          <View style={styles.iconView}>
-            <Icon
-              name='shield-half-full'
-              type='material-community'
-              color='white'
-            />
-            <Text style={styles.iconText}>夜間</Text> 
-          </View> 
-        </TouchableWithoutFeedback> 
+          <ComicBookBrightness/> 
         <TouchableWithoutFeedback
           onPress={this.onClickConfigBar} 
         >
@@ -300,7 +302,7 @@ export default class ComicBook extends Component {
       ]}]}
     >
     	<TouchableWithoutFeedback
-    		onPress={() => {console.warn('上一話')}}
+    		onPress={this.previousChapter}
     	>
 	    	<View style={styles.pagefirst}>
 		      <Icon
@@ -316,12 +318,12 @@ export default class ComicBook extends Component {
           style={styles.progressSlider}
           onSlidingComplete={this.onSlidingComplete}
           step={1}
-          minimumValue={1}
-          maximumValue={this.props.data.length}
+          minimumValue={0}
+          maximumValue={this.props.data.length - 1}
         />
       </View>
     	<TouchableWithoutFeedback
-    		onPress={() => {console.warn('下一話')}}
+    		onPress={this.nextChapter}
     	>
 	    	<View style={styles.pagelast}>
 		      <Icon
@@ -373,7 +375,12 @@ export default class ComicBook extends Component {
 	        />
         </View>
         <View style={styles.lightSliderView}>
-    			<ComicBookSlider style={styles.lightSlider}/>
+    			<ComicBookSlider 
+            ref={ref => this.lightSlider = ref}
+            style={styles.lightSlider}
+            //onSlidingStart={this.onLightSlidingStart}
+            onValueChange={this.onLightValueChange}
+          />
     		</View>
     		<View style={styles.decagramoutline}>
 	        <Icon
@@ -383,9 +390,66 @@ export default class ComicBook extends Component {
 	        />
         </View>
     	</View>
-    	<View style={styles.configBarItemView}/>
-    	<View style={styles.configBarItemView}/>
-    	<View style={styles.configBarItemView}/>
+    	<View style={styles.configBarItemView}>
+        <View style={styles.view}>
+          <Text style={styles.titleText}>閱讀模式</Text>
+        </View>
+        <View style={styles.readStyle}>
+          <Icon
+            name='book-open'
+            type='material-community'
+            color='white'
+          />
+           <Text style={styles.titleText}>普通模式</Text>
+        </View>
+        <View style={styles.readStyle}>
+          <Icon
+            name='book-open-page-variant'
+            type='material-community'
+            color='white'
+          />
+           <Text style={styles.titleText}>日漫模式</Text>
+        </View>
+        <View style={styles.readStyle}>
+          <Icon
+            name='book-open-variant'
+            type='material-community'
+            color='white'
+          />
+           <Text style={styles.titleText}>捲軸模式</Text>
+        </View>
+        <View style={styles.nonReadStyle}/>
+      </View>
+    	<View style={styles.configBarItemView}>
+        <View style={styles.view}>
+          <Text style={styles.titleText}>橫豎屏</Text>
+        </View>
+        <View style={styles.readStyle}>
+          <Icon
+            name='desktop-mac'
+            type='material-community'
+            color='white'
+          />
+           <Text style={styles.titleText}>橫屏</Text>
+        </View>
+        <View style={styles.readStyle}>
+          <Icon
+            name='desktop-classic'
+            type='material-community'
+            color='white'
+          />
+           <Text style={styles.titleText}>豎屏</Text>
+        </View>
+
+        <View style={styles.nonReadStyle}/>
+        <View style={styles.nonReadStyle}/>
+      </View>
+    	<View style={styles.configBarItemView}>
+        <View style={styles.view}>
+          <Text style={styles.titleText}>顯示單章節評論</Text>
+        </View>
+        <ComicBookSwitch/>
+      </View>
     </Animated.View>
 
    renderOptionBar= () => 
@@ -561,8 +625,23 @@ export default class ComicBook extends Component {
   }
 
   onClickConfigBar = () => {
-    this.hideToolBar()
-    this.showConfigBar()
+    if (Platform.OS === 'android') {
+      //DeviceBrightness.getSystemBrightnessLevel()
+      ScreenBrightness.getBrightness()
+      .then(brightness => {
+        console.warn(brightness)
+        this.lightSlider.setValue(brightness)
+        this.hideToolBar()
+        this.showConfigBar()
+      })
+    } else {
+      ScreenBrightness.getBrightness()
+      .then(brightness => {
+        this.lightSlider.setValue(brightness)
+        this.hideToolBar()
+        this.showConfigBar()
+      })
+    }
   }
 
   onClickOptionBar = () => {
@@ -575,7 +654,19 @@ export default class ComicBook extends Component {
   }
 
   onSlidingComplete = value => {
-    this.scrollIndex(value -1 )
+    this.scrollIndex(value)
+  }
+
+  previousChapter = () => {
+    console.warn('previousChapter')
+  }
+
+  nextChapter = () => {
+    console.warn('nextChapter')
+  }
+
+  onLightValueChange = value => {
+    DeviceBrightness.setBrightnessLevel(value)
   }
 
   render() {
@@ -618,9 +709,15 @@ const { width, height } = Dimensions.get('window')
 
 const chapterBarWidth = width*2/3
 
-const configBarHeight = height*1/3
+const configBarHeight = height*1/2
 
 const styles = StyleSheet.create({
+  modal: {
+    flex: 1, 
+    backgroundColor: 'black',
+    justifyContent: 'center', 
+    alignItems: 'center' 
+  },
   view: {
     flex: 1
   },
@@ -645,11 +742,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center'
   },
-  topToolBarLeftIcon: {
-    paddingLeft: 10
+  topToolBarView: {
+    height: 50,
+    justifyContent: 'center'
   },
-  topToolBarRightIcon: {
-    paddingRight: 10
+  topToolBarIcon: {
+    paddingLeft: 10,
+     paddingRight: 10
   },
   bottomToolBar: {
     position: 'absolute', 
@@ -670,7 +769,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(52, 52, 52, 0.8)',
     bottom: 0,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center' 
   },
   chapterBar: {
     position: 'absolute', 
@@ -696,7 +795,7 @@ const styles = StyleSheet.create({
     height: configBarHeight,
     width,
     backgroundColor: 'rgba(52, 52, 52, 0.8)',
-    bottom: 0     
+    bottom: 0
   },
   configBarItemView: {
   	flex: 1,
@@ -720,16 +819,19 @@ const styles = StyleSheet.create({
   	flex: 2
   },
   decagram: {
-  	flex: 1
+  	flex: 1,
+    paddingTop: 2
   },
   lightSliderView: {
-  	flex: 7
+  	flex: 7,
+    paddingTop: Platform.OS === 'android' ? 1 : 0
   },
   decagramoutline: {
-  	flex: 1
+  	flex: 1,
+    paddingTop: 2
   },
   lightSlider: {
-  	width: width*4/7
+  	width: width*4/7,
   },
   pagefirst: {
   	flex: 1
@@ -738,9 +840,29 @@ const styles = StyleSheet.create({
   	flex: 1
   },
   progressSliderView: {
-  	flex: 6
+  	flex: 6,
   },
   progressSlider: {
   	width: width*5/7
+  },
+  readStyle: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: 'white',
+    marginRight: 5,
+    borderRadius: 5,
+    height: configBarHeight/5,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  nonReadStyle: {
+    flex: 1,
+    borderWidth: 0,
+    borderColor: 'white',
+    marginRight: 5,
+    borderRadius: 5,
+    height: configBarHeight/5,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })

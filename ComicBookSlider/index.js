@@ -1,5 +1,5 @@
 import React , { Component } from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet, Text, Platform } from 'react-native'
 import { Slider } from 'react-native-elements'
 
 export default class ComicBookSlider extends Component {
@@ -8,14 +8,15 @@ export default class ComicBookSlider extends Component {
     super(props)
     this.state = {
       value: 0,
-      display: 'none'
+      opacity: 0
     }
   }
 
-  onSlidingStart = () => {
+  onSlidingStart = value => {
     this.setState({
-      display: null
+      opacity: 1
     })
+    this.props.onSlidingStart && this.props.onSlidingStart(value)
   }
 
   onValueChange = value => {
@@ -25,18 +26,22 @@ export default class ComicBookSlider extends Component {
 
   onSlidingComplete = value => {
     this.setState({
-      display: 'none'
+      opacity: 0
     }) 
     this.props.onSlidingComplete && this.props.onSlidingComplete(value)
+  }
+
+  setValue = value => {
+    this.setState({value})    
   }
 
   render() {
     return(
       <View style={styles.renderSliderBar}>
-        { this.props.showIndicator &&
-          <View display={this.state.display} style={styles.indicator}>
+       { this.props.showIndicator && Platform.OS === 'ios' &&
+          <View style={[styles.indicator,{opacity: this.state.opacity}]}>
             <Text style={styles.text}>第一話</Text>
-            <Text style={styles.text}>{this.state.value + '/' + this.props.maximumValue}</Text>
+            <Text style={styles.text}>{(this.state.value + 1) + '/' + (this.props.maximumValue + 1)}</Text>
           </View>
         }
         <Slider
@@ -62,13 +67,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     borderRadius: 5,
-    top: -60,
+    top:-60,
     left: 7,
     width: 60,
     height: 55
   },
   trackStyle: {
-    height: 2
+    //height: 2,
   },
   renderSliderBar: {
     flex: 1, 
