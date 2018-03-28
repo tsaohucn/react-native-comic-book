@@ -1,5 +1,5 @@
 ### react-native-comic-book
-![Demo](https://photos.app.goo.gl/8lz4kvM2MapQPvFC2)
+![Demo](https://photos.google.com/share/AF1QipOoiSlqVNNzjTSTLKQ-Za2kVLGapkA9LACcmqmLzAgN7_JREJzlr8vztQfOq37RMQ/photo/AF1QipNYfTMeiW1EAK6gZXqD1XC3fv909CgB05HfIp-q?key=ZVRzRFVBSHpEYzFkZUw0N0R6RWlXQnpxMEFDUTRn)
 
 ## Installation
 1. Run `npm install react-native-comic-book --save`
