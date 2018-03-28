@@ -11,7 +11,6 @@ import {
   Platform,
 } from 'react-native'
 import { Icon } from 'react-native-elements'
-import DeviceBrightness from 'react-native-device-brightness'
 import ScreenBrightness from 'react-native-screen-brightness'
 import InteractiveFlatList from 'react-native-interactive-flatList'
 import ComicBookImage from './ComicBookImage'
