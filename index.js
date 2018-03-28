@@ -626,10 +626,8 @@ export default class ComicBook extends Component {
 
   onClickConfigBar = () => {
     if (Platform.OS === 'android') {
-      //DeviceBrightness.getSystemBrightnessLevel()
-      ScreenBrightness.getBrightness()
+      ScreenBrightness.getAppBrightness()
       .then(brightness => {
-        console.warn(brightness)
         this.lightSlider.setValue(brightness)
         this.hideToolBar()
         this.showConfigBar()
@@ -666,7 +664,11 @@ export default class ComicBook extends Component {
   }
 
   onLightValueChange = value => {
-    DeviceBrightness.setBrightnessLevel(value)
+    if (Platform.OS === 'android') {
+      ScreenBrightness.setAppBrightness(value)
+    } else {
+      ScreenBrightness.setBrightness(value)
+    }
   }
 
   render() {

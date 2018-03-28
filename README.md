@@ -1,5 +1,7 @@
 `react-native link react-native-vector-icons`
 
+`react-native link react-native-screen-brightness`
+
 III (**Android**). Follow the steps below:
 
 **IMPORTANT:** If you use one of the *native navigation libraries* (e.g. [wix/react-native-navigation](https://github.com/wix/react-native-navigation)), you should follow [this separate guide](NATIVE_NAVIGATORS.md) to get gesture handler library set up on Android. Ignore the rest of this step – it only applies to RN apps that use standard Android project layout.

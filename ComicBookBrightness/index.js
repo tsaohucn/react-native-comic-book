@@ -1,7 +1,7 @@
 import React , { Component } from 'react'
-import { View, Text, TouchableWithoutFeedback, StyleSheet } from 'react-native'
+import { View, Text, TouchableWithoutFeedback, StyleSheet, Platform } from 'react-native'
 import { Icon } from 'react-native-elements'
-import DeviceBrightness from 'react-native-device-brightness'
+import ScreenBrightness from 'react-native-screen-brightness'
 
 export default class ComicBookBrightness extends Component {
 
@@ -14,12 +14,20 @@ export default class ComicBookBrightness extends Component {
 
   onBrightness = () => {
     if (this.state.britness === 0) {
-      DeviceBrightness.setBrightnessLevel(0.2)
+      if (Platform.OS === 'android') {
+        ScreenBrightness.setAppBrightness(0.2)
+      } else {
+        ScreenBrightness.setBrightness(0.2)
+      }
       this.setState({
         britness: 1
       })
     } else {
-      DeviceBrightness.setBrightnessLevel(0.9)
+      if (Platform.OS === 'android') {
+        ScreenBrightness.setAppBrightness(0.9)
+      } else {
+        ScreenBrightness.setBrightness(0.9)
+      }
       this.setState({
         britness: 0
       })    
