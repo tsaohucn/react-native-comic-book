@@ -1,10 +1,19 @@
+### react-native-comic-book
+![Demo](https://photos.app.goo.gl/8lz4kvM2MapQPvFC2)
+
+## Installation
+1. Run `npm install react-native-comic-book --save`
+2. react-native-comic-book use some native library so that you have to link **those library below** before you use react-native-comic-book
+
 `react-native link react-native-vector-icons`
 
 `react-native link react-native-screen-brightness`
 
-III (**Android**). Follow the steps below:
+`react-native link react-native-gesture-handler`
 
-**IMPORTANT:** If you use one of the *native navigation libraries* (e.g. [wix/react-native-navigation](https://github.com/wix/react-native-navigation)), you should follow [this separate guide](NATIVE_NAVIGATORS.md) to get gesture handler library set up on Android. Ignore the rest of this step – it only applies to RN apps that use standard Android project layout.
+**IMPORTANT：**
+
+Only for Android, react-native-gesture-handler have to do some addition manually installation below, you could reference this [link](https://github.com/kmagiera/react-native-gesture-handler) to get more detail.
 
 Update your main activity (or wherever you create an instance of `ReactActivityDelegate`), so that it overrides the method responsible for creating `ReactRootView` instance. Then use a root view wrapper provided by this library:
 ```java
@@ -27,13 +36,9 @@ public class MainActivity extends ReactActivity {
   }
 }
 ```
+## Example
 
-III (**iOS**). There is no additional config required to be done on iOS except from what follows in the next steps.
-
-
-*** Example
-
-```React
+```Javascript
 import React, { Component } from 'react'
 import { Dimensions } from 'react-native'
 import ComicBook from 'react-native-comic-book'
