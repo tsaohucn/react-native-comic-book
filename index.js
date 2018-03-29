@@ -22,9 +22,6 @@ export default class ComicBook extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-      britness: 0
-    }
     this.scrollOffset = 0
     this.contentHeight = height
     this.animatedTopToolBarY = new Animated.Value(-50, { useNativeDriver: true })
@@ -76,11 +73,13 @@ export default class ComicBook extends Component {
     Animated.parallel([
       Animated.timing(this.animatedTopToolBarY,{
         toValue: 0,
-        duration: 200
+        duration: 200,
+        useNativeDriver: true
       }),
       Animated.timing(this.animatedBottomToolBarY,{
         toValue: 0,
-        duration: 200
+        duration: 200,
+        useNativeDriver: true
       })
     ]).start(result => {
       if (result.finished) {
@@ -93,11 +92,13 @@ export default class ComicBook extends Component {
     Animated.parallel([
       Animated.timing(this.animatedTopToolBarY,{
         toValue: -50,
-        duration: 200
+        duration: 200,
+        useNativeDriver: true
       }),
       Animated.timing(this.animatedBottomToolBarY,{
         toValue: 50,
-        duration: 200
+        duration: 200,
+        useNativeDriver: true
       })
     ]).start(result => {
       if (result.finished) {
@@ -109,7 +110,8 @@ export default class ComicBook extends Component {
   showSliderBar = () => {
     Animated.timing(this.animatedSliderBarY,{
       toValue: 0,
-      duration: 200
+      duration: 200,
+      useNativeDriver: true
     }).start(result => {
       if (result.finished) {
         this.sliderBarIsShow = true
@@ -120,7 +122,8 @@ export default class ComicBook extends Component {
   hideSliderBar = () => {
     Animated.timing(this.animatedSliderBarY,{
       toValue: 50,
-      duration: 200
+      duration: 200,
+      useNativeDriver: true
     }).start(result => {
       if (result.finished) {
         this.sliderBarIsShow = false
@@ -131,7 +134,8 @@ export default class ComicBook extends Component {
   showChapterBar = () => {
     Animated.timing(this.animatedChapterBarX,{
       toValue: 0,
-      duration: 200
+      duration: 200,
+      useNativeDriver: true
     }).start(result => {
       if (result.finished) {
         this.chapterBarIsShow = true
@@ -142,7 +146,8 @@ export default class ComicBook extends Component {
   hideChapterBar = () => {
     Animated.timing(this.animatedChapterBarX,{
       toValue: chapterBarWidth,
-      duration: 200
+      duration: 200,
+      useNativeDriver: true
     }).start(result => {
       if (result.finished) {
         this.chapterBarIsShow = false
@@ -153,7 +158,8 @@ export default class ComicBook extends Component {
   showConfigBar = () => {
     Animated.timing(this.animatedConfigBarY,{
       toValue: 0,
-      duration: 200
+      duration: 200,
+      useNativeDriver: true
     }).start(result => {
       if (result.finished) {
         this.configBarIsShow = true
@@ -164,7 +170,8 @@ export default class ComicBook extends Component {
   hideConfigBar = () => {
     Animated.timing(this.animatedConfigBarY,{
       toValue: configBarHeight,
-      duration: 200
+      duration: 200,
+      useNativeDriver: true
     }).start(result => {
       if (result.finished) {
         this.configBarIsShow = false
@@ -175,7 +182,8 @@ export default class ComicBook extends Component {
   showOptionBar = () => {
     Animated.timing(this.animatedOptionBarY,{
       toValue: 0,
-      duration: 200
+      duration: 200,
+      useNativeDriver: true
     }).start(result => {
       if (result.finished) {
         this.optionBarIsShow = true
@@ -186,7 +194,8 @@ export default class ComicBook extends Component {
   hideOptionBar = () => {
     Animated.timing(this.animatedOptionBarY,{
       toValue: 100,
-      duration: 200
+      duration: 200,
+      useNativeDriver: true
     }).start(result => {
       if (result.finished) {
         this.optionBarIsShow = false
@@ -242,7 +251,7 @@ export default class ComicBook extends Component {
     >
       <View style={styles.bottomToolBarView}>
         <TouchableWithoutFeedback
-          onPress={() => console.warn('發彈幕')} 
+          //onPress={} 
         >
           <View style={styles.iconView}>
             <Icon
@@ -459,7 +468,7 @@ export default class ComicBook extends Component {
     >
 	    <View style={styles.optionBarItemView}>
 	      <TouchableWithoutFeedback
-	        onPress={() => console.warn('下載')} 
+	        //onPress={} 
 	       >
 	        <View style={styles.iconView}>
 	          <Icon
@@ -471,7 +480,7 @@ export default class ComicBook extends Component {
 	        </View> 
 	      </TouchableWithoutFeedback>
 	      <TouchableWithoutFeedback
-	        onPress={() => console.warn('詳情')} 
+	        //onPress={} 
 	       >
 	        <View style={styles.iconView}>
 	          <Icon
@@ -483,7 +492,7 @@ export default class ComicBook extends Component {
 	        </View> 
 	      </TouchableWithoutFeedback>
 	      <TouchableWithoutFeedback
-	        onPress={() => console.warn('評論')} 
+	        //onPress={} 
 	       >
 	        <View style={styles.iconView}>
 	          <Icon
@@ -495,7 +504,7 @@ export default class ComicBook extends Component {
 	        </View> 
 	      </TouchableWithoutFeedback>
 	      <TouchableWithoutFeedback
-	        onPress={() => console.warn('分享')} 
+	        //onPress={} 
 	       >
 	        <View style={styles.iconView}>
 	          <Icon
@@ -509,7 +518,7 @@ export default class ComicBook extends Component {
 	    </View>
      	<View style={styles.optionBarItemView}>
 	      <TouchableWithoutFeedback
-	        onPress={() => console.warn('收藏')} 
+	        //onPress={} 
 	       >
 	        <View style={styles.iconView}>
 	          <Icon
@@ -521,7 +530,7 @@ export default class ComicBook extends Component {
 	        </View> 
 	      </TouchableWithoutFeedback>
 	      <TouchableWithoutFeedback
-	        onPress={() => console.warn('投月票')} 
+	        //onPress={} 
 	       >
 	        <View style={styles.iconView}>
 	          <Icon
@@ -533,7 +542,7 @@ export default class ComicBook extends Component {
 	        </View> 
 	      </TouchableWithoutFeedback>
 	      <TouchableWithoutFeedback
-	        onPress={() => console.warn('標籤')} 
+	        //onPress={} 
 	       >
 	        <View style={styles.iconView}>
 	          <Icon
@@ -627,7 +636,11 @@ export default class ComicBook extends Component {
     if (Platform.OS === 'android') {
       ScreenBrightness.getAppBrightness()
       .then(brightness => {
-        this.lightSlider.setValue(brightness)
+        if (brightness >= 0 && brightness <= 1) {
+          this.lightSlider.setValue(brightness)
+        } else {
+          this.lightSlider.setValue(0)
+        }
         this.hideToolBar()
         this.showConfigBar()
       })
@@ -655,11 +668,11 @@ export default class ComicBook extends Component {
   }
 
   previousChapter = () => {
-    console.warn('previousChapter')
+    //console.warn('previousChapter')
   }
 
   nextChapter = () => {
-    console.warn('nextChapter')
+    //console.warn('nextChapter')
   }
 
   onLightValueChange = value => {
