@@ -36,7 +36,26 @@ public class MainActivity extends ReactActivity {
   }
 }
 ```
-## Example
+## API
+
+| Props   |      Description      |  Type |
+|----------|-------------|------|------|
+| data | Your array of images |Array[object]|
+| chapter | Your chapter structure |Array[object]|
+| onClickBackArrow | Fired after click back-arrow icon|function |
+
+- data:`[{key: $unique_key, uri: $your_image_source,imageHeight: $height_of_image,imageWidth:$width_of_image}]`
+	- key: (String)(Reuired)
+	- uri: (String)(Reuired)
+	- imageHeight: (Int)(Option)
+	- imageWidth: (Int)(Option)
+
+- chapter:`[{{key: $unique_key,title: $your_chapter_title, startPage: $start_page_of_this_chapter}]`
+	- key: (String)(Reuired)
+	- title: (String)(Reuired)
+	- startPage: (Int)(Reuired)
+	 
+## Usage example
 
 ```Javascript
 import React, { Component } from 'react'
@@ -68,18 +87,23 @@ const { width, height } = Dimensions.get('window')
 
 const newWidth = width.toFixed(0)
 
-const data = Array(100).fill().map((e,index) => ({ key: index.toString() ,uri: 'https://picsum.photos/'+ newWidth + '/' + newWidth + '?image=' + index}))
+const data = Array(100).fill().map((e,index) => ({ 
+	key: index.toString(),
+	uri: 'https://picsum.photos/'+ newWidth + '/' + newWidth + '?image=' + index,
+	imageHeight: newWidth,
+	imageWidth: newWidth
+}))
 
 const chapter = [
-  {key: '1', title: '1-1.精氣', startPage: 1, endPage: 10},
-  {key: '2', title: '2-2.鎮寢之寶', startPage: 11, endPage: 15},
-  {key: '3', title: '3-4.夢中人', startPage: 16, endPage: 25},
-  {key: '4', title: '4-4.馬克思主義哲學', startPage: 26, endPage: 38},
-  {key: '5', title: '5-5.飛來豔福', startPage: 39, endPage: 47},
-  {key: '6', title: '6-6.天降之物', startPage: 48, endPage: 59},
-  {key: '7', title: '7-7.演員的自我修飾', startPage: 69, endPage: 88},
-  {key: '8', title: '8-8.相遇', startPage: 89, endPage: 94},
-  {key: '9', title: '9-9.亞拉那一卡？', startPage: 95, endPage: 100}
+  {key: '1', title: '1-1.精氣', startPage: 1},
+  {key: '2', title: '2-2.鎮寢之寶', startPage: 11},
+  {key: '3', title: '3-4.夢中人', startPage: 16},
+  {key: '4', title: '4-4.馬克思主義哲學', startPage: 26},
+  {key: '5', title: '5-5.飛來豔福', startPage: 39},
+  {key: '6', title: '6-6.天降之物', startPage: 48},
+  {key: '7', title: '7-7.演員的自我修飾', startPage: 69},
+  {key: '8', title: '8-8.相遇', startPage: 89},
+  {key: '9', title: '9-9.亞拉那一卡？', startPage: 95}
 ]
 ```
 
