@@ -227,7 +227,7 @@ export default class ComicBook extends Component {
       if (result.finished) {
         this.optionBarIsShow = true
       } 
-    })  	
+    })    
   }
 
   hideOptionBar = () => {
@@ -239,7 +239,7 @@ export default class ComicBook extends Component {
       if (result.finished) {
         this.optionBarIsShow = false
       } 
-    })  	
+    })    
   }
 
   renderTopToolBar = () =>  
@@ -341,19 +341,19 @@ export default class ComicBook extends Component {
         { translateY: this.animatedSliderBarY }
       ]}]}
     >
-    	<TouchableWithoutFeedback
-    		onPress={this.previousChapter}
-    	>
-	    	<View style={styles.pagefirst}>
-		      <Icon
-		        name='page-first'
-		        type='material-community'
-		        color='white'
-		      />
-	      </View>
+      <TouchableWithoutFeedback
+        onPress={this.previousChapter}
+      >
+        <View style={styles.pagefirst}>
+          <Icon
+            name='page-first'
+            type='material-community'
+            color='white'
+          />
+        </View>
       </TouchableWithoutFeedback>
       <View style={styles.progressSliderView}>
-      	<ComicBookSlider 
+        <ComicBookSlider 
           showIndicator
           style={styles.progressSlider}
           onSlidingComplete={this.onSlidingComplete}
@@ -362,16 +362,16 @@ export default class ComicBook extends Component {
           maximumValue={this.props.data.length - 1}
         />
       </View>
-    	<TouchableWithoutFeedback
-    		onPress={this.nextChapter}
-    	>
-	    	<View style={styles.pagelast}>
-		      <Icon
-		        name='page-last'
-		        type='material-community'
-		        color='white'
-		      />
-	       </View>
+      <TouchableWithoutFeedback
+        onPress={this.nextChapter}
+      >
+        <View style={styles.pagelast}>
+          <Icon
+            name='page-last'
+            type='material-community'
+            color='white'
+          />
+         </View>
        </TouchableWithoutFeedback>
     </Animated.View>
 
@@ -403,35 +403,35 @@ export default class ComicBook extends Component {
         { translateY: this.animatedConfigBarY }
       ]}]}
     >
-    	<View style={styles.configBarItemView}>
-    		<View style={styles.lightTextView}>
-    			<Text style={styles.titleText}>亮度調節</Text>
-    		</View>
-    		<View style={styles.decagram}>
-	        <Icon
-	          name='decagram'
-	          type='material-community'
-	          color='white'
-	        />
+      <View style={styles.configBarItemView}>
+        <View style={styles.lightTextView}>
+          <Text style={styles.titleText}>亮度調節</Text>
+        </View>
+        <View style={styles.decagram}>
+          <Icon
+            name='decagram'
+            type='material-community'
+            color='white'
+          />
         </View>
         <View style={styles.lightSliderView}>
-    			<ComicBookSlider 
+          <ComicBookSlider 
             ref={ref => this.lightSlider = ref}
             style={styles.lightSlider}
             //onSlidingStart={this.onLightSlidingStart}
             onValueChange={this.onLightValueChange}
           />
-    		</View>
-    		<View style={styles.decagramoutline}>
-	        <Icon
-	          name='decagram-outline'
-	          type='material-community'
-	          color='white'
-	        />
         </View>
-    	</View>
-    	<View style={styles.configBarItemView}>
-        <View style={styles.view}>
+        <View style={styles.decagramoutline}>
+          <Icon
+            name='decagram-outline'
+            type='material-community'
+            color='white'
+          />
+        </View>
+      </View>
+      <View style={styles.configBarItemView}>
+        <View style={styles.configBarItem}>
           <Text style={styles.titleText}>閱讀模式</Text>
         </View>
         <View style={styles.readStyle}>
@@ -460,8 +460,8 @@ export default class ComicBook extends Component {
         </View>
         <View style={styles.nonReadStyle}/>
       </View>
-    	<View style={styles.configBarItemView}>
-        <View style={styles.view}>
+      <View style={styles.configBarItemView}>
+        <View style={styles.configBarItem}>
           <Text style={styles.titleText}>橫豎屏</Text>
         </View>
         <View style={styles.readStyle}>
@@ -484,8 +484,8 @@ export default class ComicBook extends Component {
         <View style={styles.nonReadStyle}/>
         <View style={styles.nonReadStyle}/>
       </View>
-    	<View style={styles.configBarItemView}>
-        <View style={styles.view}>
+      <View style={styles.configBarItemView}>
+        <View style={styles.configBarItem}>
           <Text style={styles.titleText}>顯示單章節評論</Text>
         </View>
         <ComicBookSwitch/>
@@ -498,98 +498,98 @@ export default class ComicBook extends Component {
         { translateY: this.animatedOptionBarY }
       ]}]}
     >
-	    <View style={styles.optionBarItemView}>
-	      <TouchableWithoutFeedback
-	        //onPress={} 
-	       >
-	        <View style={styles.iconView}>
-	          <Icon
-	              name='arrow-down-bold-circle-outline'
-	              type='material-community'
-	              color='white'
-	            />
-	            <Text style={styles.iconText}>下載</Text> 
-	        </View> 
-	      </TouchableWithoutFeedback>
-	      <TouchableWithoutFeedback
-	        //onPress={} 
-	       >
-	        <View style={styles.iconView}>
-	          <Icon
-	              name='content-copy'
-	              type='material-community'
-	              color='white'
-	            />
-	            <Text style={styles.iconText}>詳情</Text> 
-	        </View> 
-	      </TouchableWithoutFeedback>
-	      <TouchableWithoutFeedback
-	        //onPress={} 
-	       >
-	        <View style={styles.iconView}>
-	          <Icon
-	              name='comment-processing-outline'
-	              type='material-community'
-	              color='white'
-	            />
-	            <Text style={styles.iconText}>評論</Text> 
-	        </View> 
-	      </TouchableWithoutFeedback>
-	      <TouchableWithoutFeedback
-	        //onPress={} 
-	       >
-	        <View style={styles.iconView}>
-	          <Icon
-	              name='share'
-	              type='material-community'
-	              color='white'
-	            />
-	            <Text style={styles.iconText}>分享</Text> 
-	        </View> 
-	      </TouchableWithoutFeedback>
-	    </View>
-     	<View style={styles.optionBarItemView}>
-	      <TouchableWithoutFeedback
-	        //onPress={} 
-	       >
-	        <View style={styles.iconView}>
-	          <Icon
-	              name='star-circle'
-	              type='material-community'
-	              color='white'
-	            />
-	            <Text style={styles.iconText}>收藏</Text> 
-	        </View> 
-	      </TouchableWithoutFeedback>
-	      <TouchableWithoutFeedback
-	        //onPress={} 
-	       >
-	        <View style={styles.iconView}>
-	          <Icon
-	              name='ticket'
-	              type='material-community'
-	              color='white'
-	            />
-	            <Text style={styles.iconText}>投月票</Text> 
-	        </View> 
-	      </TouchableWithoutFeedback>
-	      <TouchableWithoutFeedback
-	        //onPress={} 
-	       >
-	        <View style={styles.iconView}>
-	          <Icon
-	              name='bookmark'
-	              type='material-community'
-	              color='white'
-	            />
-	            <Text style={styles.iconText}>標籤</Text> 
-	        </View> 
-	      </TouchableWithoutFeedback>
-	      <TouchableWithoutFeedback>
-	        <View style={styles.iconView}>
-	        </View> 
-	      </TouchableWithoutFeedback>
-     	</View>
+      <View style={styles.optionBarItemView}>
+        <TouchableWithoutFeedback
+          //onPress={} 
+         >
+          <View style={styles.iconView}>
+            <Icon
+                name='arrow-down-bold-circle-outline'
+                type='material-community'
+                color='white'
+              />
+              <Text style={styles.iconText}>下載</Text> 
+          </View> 
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
+          //onPress={} 
+         >
+          <View style={styles.iconView}>
+            <Icon
+                name='content-copy'
+                type='material-community'
+                color='white'
+              />
+              <Text style={styles.iconText}>詳情</Text> 
+          </View> 
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
+          //onPress={} 
+         >
+          <View style={styles.iconView}>
+            <Icon
+                name='comment-processing-outline'
+                type='material-community'
+                color='white'
+              />
+              <Text style={styles.iconText}>評論</Text> 
+          </View> 
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
+          //onPress={} 
+         >
+          <View style={styles.iconView}>
+            <Icon
+                name='share'
+                type='material-community'
+                color='white'
+              />
+              <Text style={styles.iconText}>分享</Text> 
+          </View> 
+        </TouchableWithoutFeedback>
+      </View>
+      <View style={styles.optionBarItemView}>
+        <TouchableWithoutFeedback
+          //onPress={} 
+         >
+          <View style={styles.iconView}>
+            <Icon
+                name='star-circle'
+                type='material-community'
+                color='white'
+              />
+              <Text style={styles.iconText}>收藏</Text> 
+          </View> 
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
+          //onPress={} 
+         >
+          <View style={styles.iconView}>
+            <Icon
+                name='ticket'
+                type='material-community'
+                color='white'
+              />
+              <Text style={styles.iconText}>投月票</Text> 
+          </View> 
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
+          //onPress={} 
+         >
+          <View style={styles.iconView}>
+            <Icon
+                name='bookmark'
+                type='material-community'
+                color='white'
+              />
+              <Text style={styles.iconText}>標籤</Text> 
+          </View> 
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback>
+          <View style={styles.iconView}>
+          </View> 
+        </TouchableWithoutFeedback>
+      </View>
     </Animated.View>
 
   onSingleClickTopArea = () => {
@@ -687,8 +687,8 @@ export default class ComicBook extends Component {
   }
 
   onClickOptionBar = () => {
-  	this.hideToolBar()
-  	this.showOptionBar()
+    this.hideToolBar()
+    this.showOptionBar()
   }
 
   onClickChapterItem = item => {
@@ -857,52 +857,55 @@ const styles = StyleSheet.create({
     bottom: 0
   },
   configBarItemView: {
-  	flex: 1,
-  	flexDirection: 'row',
-  	alignItems: 'center',
-  	paddingLeft: 10,
-  	paddingRight: 10
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: 10,
+    paddingRight: 10
+  },
+  configBarItem: {
+    flex: 1
   },
   optionBar: {
     position: 'absolute', 
     height: 100,
     width,
     backgroundColor: 'rgba(52, 52, 52, 0.8)',
-    bottom: 0   	
+    bottom: 0     
   },
   optionBarItemView: {
-  	flex: 1,
-  	flexDirection: 'row'
+    flex: 1,
+    flexDirection: 'row'
   },
   lightTextView: {
-  	flex: 2
+    flex: 2
   },
   decagram: {
-  	flex: 1,
+    flex: 1,
     paddingTop: 2
   },
   lightSliderView: {
-  	flex: 7,
+    flex: 7,
     paddingTop: Platform.OS === 'android' ? 1 : 0
   },
   decagramoutline: {
-  	flex: 1,
+    flex: 1,
     paddingTop: 2
   },
   lightSlider: {
-  	width: width*4/7,
+    width: width*4/7,
   },
   pagefirst: {
-  	flex: 1
+    flex: 1
   },
   pagelast: {
-  	flex: 1
+    flex: 1
   },
   progressSliderView: {
-  	flex: 6,
+    flex: 6,
   },
   progressSlider: {
-  	width: width*5/7
+    width: width*5/7
   },
   readStyle: {
     flex: 1,
