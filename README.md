@@ -82,3 +82,44 @@ const chapter = [
   {key: '9', title: '9-9.亞拉那一卡？', startPage: 95, endPage: 100}
 ]
 ```
+
+```javascript
+import React, { Component } from 'react'
+import ComicBook from 'react-native-comic-book'
+
+export default class App extends Component {
+
+  constructor(props) {
+    super(props)
+  }
+
+  onClickBackArrow = () => {
+    console.warn('返回')
+  }
+
+  render() {
+    return (
+      <ComicBook
+        data={data}
+        chapter={chapter}
+        onClickBackArrow={this.onClickBackArrow}
+      />
+    )
+  }
+}
+
+const data = [
+  {key: '1', uri: 'https://attach.setn.com/newsimages/2017/08/12/1007275-XXL.jpg'},
+  {key: '2', uri: 'https://images.900.tw/upload_file/41/content/d3c75448-590a-564b-7a69-48efdd127efc.png'},
+  {key: '3', uri: 'https://pic.pimg.tw/leo96628/1453875282-2133772788_n.jpg?v=1453875697'},
+  {key: '4', uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCuHPWyQMdppcxHtB4t-1sfjjcaxsFZ83jrgrHeCieuAy16PFDjA'},
+  {key: '5', uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFOCawkKUoECSPBmrdaUQkSzcAyzAtTtqrip5OPO6xfNGYYBEb'},
+  {key: '6', uri: 'https://img.chinatimes.com/newsphoto/2017-05-25/656/a19a00_p_02_02.jpg'},
+  {key: '7', uri: 'https://10.pic.7230.com/2017-08/mng1JNrgcxQvSpcjknA9HAOPL2sypbTHwfhk9vYR.jpeg'}
+]
+
+const chapter = [
+  {key: '1', title: '1-1.精氣', startPage: 1},
+  {key: '2', title: '2-2.鎮寢之寶', startPage: 6}
+]
+```

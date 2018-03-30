@@ -4,11 +4,13 @@ import {
   StyleSheet,
   Text,
   View,
+  Image,
   Dimensions,
   Animated,
   TouchableWithoutFeedback,
   FlatList,
   Platform,
+  ActivityIndicator
 } from 'react-native'
 import { Icon } from 'react-native-elements'
 import ScreenBrightness from 'react-native-screen-brightness'
@@ -22,6 +24,9 @@ export default class ComicBook extends Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      isLoading: true
+    }
     this.scrollOffset = 0
     this.contentHeight = height
     this.animatedTopToolBarY = new Animated.Value(-50, { useNativeDriver: true })
@@ -35,13 +40,47 @@ export default class ComicBook extends Component {
     this.chapterBarIsShow = false
     this.configBarIsShow = false
     this.optionBarIsShow = false
+    this.scaleImageHeightArray = new Array // [{scaleImageHeight: value, scaleImageHeightOffset: value}]
+    this.scaleImageHeightOffset = 0
+  }
+
+  componentDidMount() {
+    const scaleImageHeightArray = this.props.data.map(async (ele,index) => {
+      let scaleImageHeight = width
+      if (ele.imageHeight && ele.imageWidth) {
+        scaleImageHeight = width*ele.imageHeight/ele.imageWidth
+      } else {
+        await Image.getSize(ele.uri,(imageWidth, imageHeight) => {
+          if (imageWidth && imageHeight) {
+            scaleImageHeight = width*imageHeight/imageWidth
+          }
+        },() => {
+          scaleImageHeight = width
+        })
+      }
+      //if (index > 0) {
+        this.scaleImageHeightOffset += scaleImageHeight
+      //}
+      return {scaleImageHeight: scaleImageHeight, scaleImageHeightOffset: this.scaleImageHeightOffset}
+    })
+    Promise.all(scaleImageHeightArray).then(value => {
+      this.scaleImageHeightArray = value
+    }).then(() => {
+      this.setState({
+        isLoading: false
+      })
+    })    
   }
 
   ref = ref => this.FlatList = ref.getFlatList()
 
-  getItemLayout = (data, index) => (
-    { length: width, offset: width * index, index }
-  )
+  getItemLayout = (data, index) => ({ length: this.scaleImageHeightArray[index].scaleImageHeight, offset: this.scaleImageHeightArray[index].scaleImageHeightOffset - this.scaleImageHeightArray[0].scaleImageHeightOffset, index })
+
+  renderItem = ({ item, index }) => 
+    <ComicBookImage
+      scaleImageHeight={this.scaleImageHeightArray[index].scaleImageHeight}
+      source={{uri: item.uri}}
+    />
 
   onScroll= ({nativeEvent}) => {
     this.scrollOffset = nativeEvent.contentOffset.y
@@ -202,13 +241,6 @@ export default class ComicBook extends Component {
       } 
     })  	
   }
-
-  renderItem = ({ item }) => 
-    <ComicBookImage
-      resizeMode={'contain'} 
-      style={{width, height: width, backgroundColor: 'black'}}
-      source={{uri: item.uri}}
-    />
 
   renderTopToolBar = () =>  
     <Animated.View style={[styles.topToolBar,{
@@ -686,23 +718,35 @@ export default class ComicBook extends Component {
   render() {
     return (
       <View style={styles.view}>
-        <InteractiveFlatList
-          ref={this.ref}
-          data={this.props.data}
-          renderItem={this.renderItem}
-          getItemLayout={this.getItemLayout}
-          onSingleClickTopArea={this.onSingleClickTopArea}
-          onSingleClickMiddleArea={this.onSingleClickMiddleArea}
-          onSingleClickBottomArea={this.onSingleClickBottomArea}
-          onScrollBeginDrag={this.onScrollBeginDrag}
-          onScroll={this.onScroll}
-        />
-          { this.renderTopToolBar() }
-          { this.renderBottomToolBar() }
-          { this.renderSliderBar() }
-          { this.renderChapterBar() }
-          { this.renderConfigBar() }
-          { this.renderOptionBar() }
+        { this.state.isLoading ? 
+          <View style={styles.view}>
+            <ActivityIndicator
+              style={styles.activityIndicator}
+              size="large" 
+              color="#0000ff"
+            /> 
+          </View> 
+          :  
+          <View style={styles.view}>
+            <InteractiveFlatList
+              ref={this.ref}
+              data={this.props.data}
+              renderItem={this.renderItem}
+              getItemLayout={this.getItemLayout}
+              onSingleClickTopArea={this.onSingleClickTopArea}
+              onSingleClickMiddleArea={this.onSingleClickMiddleArea}
+              onSingleClickBottomArea={this.onSingleClickBottomArea}
+              onScrollBeginDrag={this.onScrollBeginDrag}
+              onScroll={this.onScroll}
+            />
+              { this.renderTopToolBar() }
+              { this.renderBottomToolBar() }
+              { this.renderSliderBar() }
+              { this.renderChapterBar() }
+              { this.renderConfigBar() }
+              { this.renderOptionBar() }  
+          </View>     
+        }
       </View>
     )
   }
@@ -726,14 +770,15 @@ const chapterBarWidth = width*2/3
 const configBarHeight = height*1/2
 
 const styles = StyleSheet.create({
-  modal: {
-    flex: 1, 
-    backgroundColor: 'black',
-    justifyContent: 'center', 
-    alignItems: 'center' 
+  activityIndicator: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center'
   },
   view: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#000000'
   },
   titleText: {
     color: 'white'
