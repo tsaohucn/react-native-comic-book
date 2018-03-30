@@ -38,11 +38,11 @@ public class MainActivity extends ReactActivity {
 ```
 ## API
 
-| Props   |      Description      |  Type |
-|----------|-------------|------|------|
-| data | Your array of images |Array[object]|
-| chapter | Your chapter structure |Array[object]|
-| onClickBackArrow | Fired after click back-arrow icon|function |
+ Props | Description | Type 
+------ | ------ | ------
+data | Your array of images |Array[object]
+chapter | Your chapter structure |Array[object]
+onClickBackArrow | Fired after click back-arrow icon|function
 
 - data:`[{key: $unique_key, uri: $your_image_source,imageHeight: $height_of_image,imageWidth:$width_of_image}]`
 	- key: (String)(Reuired)
