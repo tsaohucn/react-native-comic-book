@@ -58,9 +58,7 @@ export default class ComicBook extends Component {
           scaleImageHeight = width
         })
       }
-      //if (index > 0) {
-        this.scaleImageHeightOffset += scaleImageHeight
-      //}
+      this.scaleImageHeightOffset += scaleImageHeight
       return {scaleImageHeight: scaleImageHeight, scaleImageHeightOffset: this.scaleImageHeightOffset}
     })
     Promise.all(scaleImageHeightArray).then(value => {
@@ -69,7 +67,9 @@ export default class ComicBook extends Component {
       this.setState({
         isLoading: false
       })
-    })    
+    }).catch(err => {
+      console.log(err)
+    })
   }
 
   ref = ref => this.FlatList = ref.getFlatList()

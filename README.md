@@ -139,7 +139,9 @@ const data = [
   {key: '4', uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCuHPWyQMdppcxHtB4t-1sfjjcaxsFZ83jrgrHeCieuAy16PFDjA'},
   {key: '5', uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFOCawkKUoECSPBmrdaUQkSzcAyzAtTtqrip5OPO6xfNGYYBEb'},
   {key: '6', uri: 'https://img.chinatimes.com/newsphoto/2017-05-25/656/a19a00_p_02_02.jpg'},
-  {key: '7', uri: 'https://10.pic.7230.com/2017-08/mng1JNrgcxQvSpcjknA9HAOPL2sypbTHwfhk9vYR.jpeg'}
+  {key: '7', uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0mIVh-vZL8YX7XK9OBGSfxQS5_-6aI0kksUDIRkfD4_56QQOKSw'},
+  {key: '8', uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRXjGshChW7BLaqJ0QYVMHkUufM5udR1w8uD-yEjiGhpJK5-Rs'},
+  {key: '9', uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8eo8HBDp121_uEyFArtVhuUbgc3lHg1aeYUUGAbFIZsn9inWO'}
 ]
 
 const chapter = [
