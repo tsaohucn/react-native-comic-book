@@ -2,7 +2,7 @@
 ![Demo](https://photos.google.com/share/AF1QipOoiSlqVNNzjTSTLKQ-Za2kVLGapkA9LACcmqmLzAgN7_JREJzlr8vztQfOq37RMQ/photo/AF1QipNYfTMeiW1EAK6gZXqD1XC3fv909CgB05HfIp-q?key=ZVRzRFVBSHpEYzFkZUw0N0R6RWlXQnpxMEFDUTRn)
 
 ## Installation
-1. Run `npm install react-native-comic-book --save`
+1. Run `npm install git+http://192.168.0.200/xc/react-native-comic-book.git --save`
 2. react-native-comic-book use some native library so that you have to link **those library below** before you use react-native-comic-book
 
 `react-native link react-native-vector-icons`
