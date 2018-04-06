@@ -31,8 +31,8 @@ export default class ComicBookSlider extends Component {
     this.props.onSlidingComplete && this.props.onSlidingComplete(value)
   }
 
-  setValue = value => {
-    this.setState({value})    
+  setValue = (value,done) => {
+    this.setState({value},done)    
   }
 
   render() {
