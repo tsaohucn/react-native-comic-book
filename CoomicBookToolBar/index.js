@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   Platform 
 } from 'react-native'
+import PropTypes from 'prop-types'
 import ScreenBrightness from 'react-native-screen-brightness'
 import TopBar from './TopBar'
 import BottomBar from './BottomBar'
@@ -28,7 +29,7 @@ export default class CoomicBookToolBar extends Component {
     this.animatedConfigBarY =  new Animated.Value(hideConfigBarY, { useNativeDriver: true })
     this.toolBarIsShow = false
     this.optionBarIsShow = false
-    this.chapterBarIsShow = true
+    this.chapterBarIsShow = false
     this.sliderBarIsShow = false
     this.configBarIsShow = false
   }
@@ -284,8 +285,8 @@ export default class CoomicBookToolBar extends Component {
     return(
       <View style={styles.view}>
         <TopBar
-          animatedTopBarY={this.animatedTopBarY}
           onClickBackArrow={this.props.onClickBackArrow}
+          animatedTopBarY={this.animatedTopBarY}
           onClickOptionBar={this.onClickOptionBar}
         />
         <OptionBar
@@ -298,15 +299,18 @@ export default class CoomicBookToolBar extends Component {
           onClickConfigBar={this.onClickConfigBar}
         />
         <ChapterBar
-          animatedChapterBarX={this.animatedChapterBarX}
-          onClickChapterItem={this.props.onClickChapterItem}
           chapter={this.props.chapter}
+          onClickChapterItem={this.props.onClickChapterItem}
+          animatedChapterBarX={this.animatedChapterBarX}
         />
         <SliderBar
-          animatedSliderBarY={this.animatedSliderBarY}
+          chapter={this.props.chapter}
+          onClickPreviousChapter={this.props.onClickPreviousChapter}
+          onClickNextChapter={this.props.onClickNextChapter}
           onSlidingComplete={this.props.onSlidingComplete}
-          minimumValue={0}
-          maximumValue={this.props.totalPageCount - 1}
+          animatedSliderBarY={this.animatedSliderBarY}
+          //minimumValue={0}
+          //maximumValue={this.props.totalPageCount - 1}
         />
         <ConfigBar
           ref={ref => this.ConfigBar = ref}
@@ -316,6 +320,16 @@ export default class CoomicBookToolBar extends Component {
       </View>
     )
   }
+}
+
+CoomicBookToolBar.propTypes = {
+  chapter: PropTypes.array,
+  onClickBackArrow: PropTypes.func,
+  onClickChapterItem: PropTypes.func
+}
+
+CoomicBookToolBar.defaultProps = {
+  chapter: []
 }
 
 const { width, height } = Dimensions.get('window')

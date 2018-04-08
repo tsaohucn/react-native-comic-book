@@ -20,7 +20,7 @@ const ChapterBar = ({ animatedChapterBarX, onClickChapterItem, chapter }) => (
       renderItem={({ item }) => 
         <TouchableWithoutFeedback
           onPress={() => {
-            onClickChapterItem && onClickChapterItem(item.startPage)
+            onClickChapterItem && onClickChapterItem(item.pageNumber)
           }}
         >
           <View style={styles.chapterBarView}>

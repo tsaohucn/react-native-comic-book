@@ -1,25 +1,27 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { PureComponent } from 'react'
 import {
   StyleSheet,
   View,
   Image,
   Dimensions,
   Platform,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native'
+import PropTypes from 'prop-types'
 import InteractiveFlatList from 'react-native-interactive-flatList'
 import CoomicBookToolBar from './CoomicBookToolBar'
 import ComicBookImage from './ComicBookImage'
 
-export default class ComicBook extends Component {
+export default class ComicBook extends PureComponent {
 
   constructor(props) {
     super(props)
     this.scrollOffset = 0
+    this.pageNumber = 0
     this.contentHeight = height
-    this.scaleImageHeightArray = new Array // [{scaleImageHeight: value, scaleImageHeightOffset: value}]
+    this.scaleImageHeightArray = new Array() // [{scaleImageHeight: value, scaleImageHeightOffset: value}]
     this.scaleImageHeightOffset = 0
+    this.FlatList = null
     this.state = {
       isLoading: true
     }
@@ -53,25 +55,18 @@ export default class ComicBook extends Component {
     })
   }
 
-  scrollToIndex = index => {
-    this.CoomicBookToolBar.hideChapterBar()
-    this.FlatList.scrollToIndex({animated: false, index: index - 1})
+  componentWillUnmount() {
+    this.props.onEndComicBook && this.props.onEndComicBook(this.pageNumber)
   }
 
-  scrollOnTop = () => {
+  scrollToTop = () => {
     const scrollOffset = this.scrollOffset - height/3 < 0 ? 0 : this.scrollOffset - height/3
-    this.FlatList.scrollToOffset({
-      offset: scrollOffset,
-      animated: true
-    })    
+    this.FlatList.scrollToOffset({offset: scrollOffset, animated: true })    
   }
 
-  scrollOnBottom = () => {
+  scrollToBottom = () => {
     const scrollOffset = this.scrollOffset + height/3 > this.contentHeight ? this.contentHeight :this.scrollOffset + height/3
-    this.FlatList.scrollToOffset({
-      offset: scrollOffset,
-      animated: true
-    })    
+    this.FlatList.scrollToOffset({offset: scrollOffset, animated: true})    
   }
 
   onScrollBeginDrag = () => {
@@ -83,7 +78,20 @@ export default class ComicBook extends Component {
     this.contentHeight = nativeEvent.contentSize.height - nativeEvent.layoutMeasurement.height
   }
 
-  getItemLayout = (data, index) => ({ length: this.scaleImageHeightArray[index].scaleImageHeight, offset: this.scaleImageHeightArray[index].scaleImageHeightOffset - this.scaleImageHeightArray[0].scaleImageHeightOffset, index })
+  onViewableItemsChanged = ({ viewableItems, changed }) => {
+    const itemsLength = viewableItems.length
+    if (itemsLength > 0) {
+      this.pageNumber = viewableItems[viewableItems.length -1].key
+    }
+  }
+
+  getItemLayout = (data, index) => {
+    if (index >= 0) {
+      return { length: this.scaleImageHeightArray[index].scaleImageHeight, offset: this.scaleImageHeightArray[index].scaleImageHeightOffset - this.scaleImageHeightArray[0].scaleImageHeightOffset, index }
+    } else {
+      return { length: 0, offset: 0, index }
+    }
+  }
 
   renderItem = ({ item, index }) => 
     <ComicBookImage
@@ -100,7 +108,7 @@ export default class ComicBook extends Component {
   }
 
   onSingleClickTopArea = () => {
-    this.CoomicBookToolBar.toolBarResponse(false,this.scrollOnTop)
+    this.CoomicBookToolBar.toolBarResponse(false,this.scrollToTop)
   }
 
   onSingleClickMiddleArea = () => {
@@ -108,18 +116,31 @@ export default class ComicBook extends Component {
   }
 
   onSingleClickBottomArea = () => {
-    this.CoomicBookToolBar.toolBarResponse(false,this.scrollOnBottom)
+    this.CoomicBookToolBar.toolBarResponse(false,this.scrollToBottom)
   }
 
-  onClickChapterItem = startPage => {
-    this.scrollToIndex(startPage)
+  onClickChapterItem = pageNumber => {
+    this.CoomicBookToolBar.hideChapterBar()
+    this.FlatList.scrollToIndex({animated: false, index: pageNumber - 1})
   }
 
-  onSlidingComplete = index => {
-    this.FlatList.scrollToIndex({animated: false, index: index})
+  onSlidingComplete = page => {
+    this.FlatList.scrollToIndex({animated: false, index: pageNumber})
   }
 
-  render() {
+  onClickPreviousChapter = () => {
+    console.warn('onClickPreviousChapter')
+  }
+
+  onClickNextChapter = () => {
+    console.warn('onClickNextChapter')
+  }
+
+  sleep = ms => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  render() {    
     return (
       <View style={styles.view}>
         { this.state.isLoading ? 
@@ -127,14 +148,20 @@ export default class ComicBook extends Component {
             <ActivityIndicator
               style={styles.activityIndicator}
               size="large" 
-              color="#0000ff"
+              color="white"
             /> 
           </View> 
           :  
           <View style={styles.view}> 
             <InteractiveFlatList
-              ref={ ref => this.FlatList = ref.getFlatList() }
+              ref={ ref => {
+                if (ref) {
+                  this.FlatList = ref.getFlatList()
+                }
+              }}
               data={this.props.data}
+              initialNumToRender={this.props.startPageNumber -1}
+              initialScrollIndex={this.props.startPageNumber -1}
               renderItem={this.renderItem}
               getItemLayout={this.getItemLayout}
               onPinchStart={this.onPinchStart}
@@ -144,6 +171,7 @@ export default class ComicBook extends Component {
               onSingleClickBottomArea={this.onSingleClickBottomArea}
               onScrollBeginDrag={this.onScrollBeginDrag}
               onScroll={this.onScroll}
+              onViewableItemsChanged={this.onViewableItemsChanged}
             />
             <CoomicBookToolBar 
               ref= { ref => this.CoomicBookToolBar = ref }
@@ -151,7 +179,8 @@ export default class ComicBook extends Component {
               onClickBackArrow={this.props.onClickBackArrow}
               onClickChapterItem={this.onClickChapterItem}
               onSlidingComplete={this.onSlidingComplete}
-              totalPageCount={this.props.data.length}
+              onClickPreviousChapter={this.onClickPreviousChapter}
+              onClickNextChapter={this.onClickNextChapter}
             />
           </View>     
         }
@@ -164,6 +193,8 @@ ComicBook.propTypes = {
   data: PropTypes.array,
   chapter: PropTypes.array,
   onClickBackArrow: PropTypes.func,
+  onEndComicBook: PropTypes.func,
+  startPageNumber: PropTypes.number
 }
 
 ComicBook.defaultProps = {
