@@ -11,13 +11,15 @@
     "url": "http://192.168.0.200/xc/react-native-comic-book.git"
   },
   "dependencies": {
-    "react": "^16.3.1",
-    "react-native": "^0.55.1",
     "prop-types": "^15.5.10",
     "react-native-interactive-flatList": "git+http://192.168.0.200/xc/react-native-interactive-flatList.git",
     "react-native-screen-brightness": "git@github.com:robinpowered/react-native-screen-brightness.git",
     "react-native-elements": "^1.0.0-beta3",
     "react-native-vector-icons": "^4.5.0"
+  },
+  "peerDependencies": {
+    "react": "16.3.1",
+    "react-native": "0.55.1",
   },
   "keywords": [
     "react native comic book"
