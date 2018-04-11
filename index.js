@@ -104,10 +104,6 @@ export default class ComicBook extends PureComponent {
     this.contentHeight = nativeEvent.contentSize.height - nativeEvent.layoutMeasurement.height
   }
 
-  onScrollEndDrag = ({nativeEvent}) => {
-    //console.log(nativeEvent)
-  }
-
   onMomentumScrollEnd = () => {
     this.isScroll = false
   }
@@ -207,22 +203,20 @@ export default class ComicBook extends PureComponent {
                   this.InteractiveFlatList = ref.getFlatList()
                 }
               }}
-              data={this.props.data}
-              initialNumToRender={this.props.startPageNumber -1}
-              initialScrollIndex={this.props.startPageNumber -1}
-              renderItem={this.props.renderItem ? this.props.renderItem : this.renderItem}
-              getItemLayout={this.getItemLayout}
               onPinchStart={this.onPinchStart}
               onDoubleClick={this.onDoubleClick}
               onSingleClickTopArea={this.onSingleClickTopArea}
               onSingleClickMiddleArea={this.onSingleClickMiddleArea}
               onSingleClickBottomArea={this.onSingleClickBottomArea}
-              onScrollBeginDrag={this.onScrollBeginDrag}
-              onScroll={this.onScroll}
-              onViewableItemsChanged={this.onViewableItemsChanged}
-              onLayout={this.onLayout}
-              onScrollEndDrag={this.onScrollEndDrag}
-              onMomentumScrollEnd={this.onMomentumScrollEnd}
+              data={this.props.data}
+              initialScrollIndex={this.props.initialScrollIndex ? this.props.initialScrollIndex : this.props.startPageNumber -1}
+              renderItem={this.props.renderItem ? this.props.renderItem : this.renderItem}
+              getItemLayout={this.props.getItemLayout ? this.props.getItemLayout : this.getItemLayout}
+              onLayout={this.props.onLayout ? this.props.onLayout : this.onLayout}
+              onViewableItemsChanged={this.props.onViewableItemsChanged ? this.props.onViewableItemsChanged : this.onViewableItemsChanged}
+              onScrollBeginDrag={this.props.onScrollBeginDrag ? this.props.onScrollBeginDrag : this.onScrollBeginDrag}
+              onScroll={this.props.onScroll ? this.props.onScroll : this.onScroll}
+              onMomentumScrollEnd={this.props.onMomentumScrollEnd ? this.props.onMomentumScrollEnd : this.onMomentumScrollEnd}
             />
             <CoomicBookTool 
               ref= { ref => this.CoomicBookTool = ref }
