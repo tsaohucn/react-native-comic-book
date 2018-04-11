@@ -54,10 +54,10 @@ getItemLayout | your comic-book itemLayout | function
   - title : title of this chapter
 
 - data : `[{ key: (String)(Reuired), uri: (String)(Reuired),imageHeight: (Int)(Option),(Int)(Option) }]`
-	- key : (String)(Reuired)
-	- uri : (String)(Reuired)
-	- imageHeight : (Int)(Option)
-	- imageWidth : (Int)(Option)
+	- key : unique key
+	- uri : uri of your image
+	- imageHeight : height of your image
+	- imageWidth : width of your image
 
 	 
 ## Usage example
@@ -131,7 +131,7 @@ export default class App extends Component {
   onClickBackArrow = () => {
     console.log('返回')
   }
-  
+
   onEndComicBook = (pageNumber) => {
     console.log(pageNumber)
   }
