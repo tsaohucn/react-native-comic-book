@@ -10,7 +10,7 @@ import {
 import { Icon } from 'react-native-elements'
 import ComicBookBrightness from './ComicBookBrightness'
 
-const BottomBar = ({animatedBottomBarY, onClickChapterBar, onClickSliderBar, onClickConfigBar }) => (
+const BottomBar = ({animatedBottomBarY, onClickChapterBar, onClickProgressBar, onClickConfigBar }) => (
   <Animated.View style={[styles.bottomToolBarAnimated,{
     transform: [
       { translateY: animatedBottomBarY }
@@ -39,7 +39,7 @@ const BottomBar = ({animatedBottomBarY, onClickChapterBar, onClickSliderBar, onC
         </View>
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback
-        onPress={onClickSliderBar} 
+        onPress={onClickProgressBar} 
       >
         <View style={styles.bottomToolBarIconView}>
           <Icon

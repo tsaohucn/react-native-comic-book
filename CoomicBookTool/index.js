@@ -11,30 +11,30 @@ import {
 import PropTypes from 'prop-types'
 import ScreenBrightness from 'react-native-screen-brightness'
 import TopBar from './TopBar'
-import BottomBar from './BottomBar'
-import SliderBar from './SliderBar'
-import ChapterBar from './ChapterBar'
-import ConfigBar from './ConfigBar'
 import OptionBar from './OptionBar'
+import BottomBar from './BottomBar'
+import ChapterBar from './ChapterBar'
+import ProgressBar from './ProgressBar'
+import ConfigBar from './ConfigBar'
 
-export default class CoomicBookToolBar extends Component {
+export default class CoomicBookTool extends Component {
 
   constructor(props) {
     super(props)
     this.animatedTopBarY = new Animated.Value(hideTopBarY, { useNativeDriver: true })
     this.animatedOptionBarY =  new Animated.Value(hideOptionBarY, { useNativeDriver: true })
     this.animatedBottomBarY = new Animated.Value(hideBottomBarY, { useNativeDriver: true })
-    this.animatedSliderBarY = new Animated.Value(hideSliderBarY, { useNativeDriver: true })
     this.animatedChapterBarX =  new Animated.Value(hideChapterBarX, { useNativeDriver: true })
+    this.animatedProgressBarY = new Animated.Value(hideProgressBarY, { useNativeDriver: true })
     this.animatedConfigBarY =  new Animated.Value(hideConfigBarY, { useNativeDriver: true })
-    this.toolBarIsShow = false
+    this.navigationBarIsShow = false
     this.optionBarIsShow = false
+    this.progressBarIsShow = false
     this.chapterBarIsShow = false
-    this.sliderBarIsShow = false
     this.configBarIsShow = false
   }
 
-  showToolBar = () => {
+  showNavigationBar = () => {
     Animated.parallel([
       Animated.timing(this.animatedTopBarY,{
         toValue: showTopBarY,
@@ -48,7 +48,7 @@ export default class CoomicBookToolBar extends Component {
       })
     ]).start(result => {
       if (result.finished) {
-        this.toolBarIsShow = true
+        this.navigationBarIsShow = true
       }
     })    
   }
@@ -72,7 +72,7 @@ export default class CoomicBookToolBar extends Component {
       })
     ]).start(result => {
       if (result.finished) {
-        this.toolBarIsShow = false
+        this.navigationBarIsShow = false
         this.optionBarIsShow = true
       } 
     })    
@@ -97,13 +97,13 @@ export default class CoomicBookToolBar extends Component {
       })
     ]).start(result => {
       if (result.finished) {
-        this.toolBarIsShow = false
+        this.navigationBarIsShow = false
         this.chapterBarIsShow = true
       } 
     })    
   }
 
-  showSliderBar = () => {
+  showProgressBar = () => {
     Animated.parallel([
       Animated.timing(this.animatedTopBarY,{
         toValue: hideTopBarY,
@@ -115,15 +115,15 @@ export default class CoomicBookToolBar extends Component {
         duration: 200,
         useNativeDriver: true
       }),
-      Animated.timing(this.animatedSliderBarY,{
-        toValue: showSliderBarY,
+      Animated.timing(this.animatedProgressBarY,{
+        toValue: showProgressBarY,
         duration: 200,
         useNativeDriver: true
       })
     ]).start(result => {
       if (result.finished) {
-        this.toolBarIsShow = false
-        this.sliderBarIsShow = true
+        this.navigationBarIsShow = false
+        this.progressBarIsShow = true
       } 
     })
   }
@@ -147,13 +147,13 @@ export default class CoomicBookToolBar extends Component {
       })
     ]).start(result => {
       if (result.finished) {
-        this.toolBarIsShow = false
+        this.navigationBarIsShow = false
         this.configBarIsShow = true
       } 
     })
   }
 
-  hideTopBottomBar = () => {
+  hideNavigationBar = () => {
     Animated.parallel([
       Animated.timing(this.animatedTopBarY,{
         toValue: hideTopBarY,
@@ -167,7 +167,7 @@ export default class CoomicBookToolBar extends Component {
       })
     ]).start(result => {
       if (result.finished) {
-        this.toolBarIsShow = false
+        this.navigationBarIsShow = false
       }
     })
   }
@@ -196,14 +196,14 @@ export default class CoomicBookToolBar extends Component {
     })     
   }
 
-  hideSliderBar = () => {
-    Animated.timing(this.animatedSliderBarY,{
-      toValue: hideSliderBarY,
+  hideProgressBar = () => {
+    Animated.timing(this.animatedProgressBarY,{
+      toValue: hideProgressBarY,
       duration: 200,
       useNativeDriver: true
     }).start(result => {
       if (result.finished) {
-        this.sliderBarIsShow = false
+        this.progressBarIsShow = false
       } 
     })
   }
@@ -220,26 +220,6 @@ export default class CoomicBookToolBar extends Component {
     })
   }
 
-  toolBarResponse = (showToolBar,afterResponse) => {
-    if (this.toolBarIsShow) {
-      this.hideTopBottomBar()
-    } else if (this.sliderBarIsShow) {
-      this.hideSliderBar()
-    } else if (this.chapterBarIsShow) {
-      this.hideChapterBar()
-    } else if (this.configBarIsShow) {
-      this.hideConfigBar()
-    } else if (this.optionBarIsShow) {
-      this.hideOptionBar()
-    } else {
-      if (afterResponse) {
-        afterResponse()
-      } else {
-        showToolBar && this.showToolBar()
-      }
-    }
-  }
-
   onClickOptionBar = () => {
     this.showOptionBar()
   }
@@ -248,8 +228,8 @@ export default class CoomicBookToolBar extends Component {
     this.showChapterBar()
   }
 
-  onClickSliderBar = () => {
-    this.showSliderBar()
+  onClickProgressBar = () => {
+    this.showProgressBar()
   }
 
   onClickConfigBar = () => {
@@ -281,6 +261,27 @@ export default class CoomicBookToolBar extends Component {
     }
   }
 
+  receiveAnimationEvent = ({showNavigationBar,onEndReceiveEvent}) => {
+    if (this.navigationBarIsShow) {
+      this.hideNavigationBar()
+    } else if (this.optionBarIsShow) {
+      this.hideOptionBar()
+    } else if (this.chapterBarIsShow) {
+      this.hideChapterBar()
+    } else if (this.progressBarIsShow) {
+      this.hideProgressBar()
+    } else if (this.configBarIsShow) {
+      this.hideConfigBar()
+    } else {
+      showNavigationBar && this.showNavigationBar()
+      onEndReceiveEvent && onEndReceiveEvent()
+    }
+  }
+
+  receivePageNumber = pageNumber => {
+    this.ProgressBar.receivePageNumber(pageNumber)
+  }
+
   render() {
     return(
       <View style={styles.view}>
@@ -295,7 +296,7 @@ export default class CoomicBookToolBar extends Component {
         <BottomBar
           animatedBottomBarY={this.animatedBottomBarY}
           onClickChapterBar={this.onClickChapterBar}
-          onClickSliderBar={this.onClickSliderBar}
+          onClickProgressBar={this.onClickProgressBar}
           onClickConfigBar={this.onClickConfigBar}
         />
         <ChapterBar
@@ -303,14 +304,14 @@ export default class CoomicBookToolBar extends Component {
           onClickChapterItem={this.props.onClickChapterItem}
           animatedChapterBarX={this.animatedChapterBarX}
         />
-        <SliderBar
+        <ProgressBar
+          ref={ref => this.ProgressBar = ref}
           chapter={this.props.chapter}
+          finalPageNumber={this.props.finalPageNumber}
           onClickPreviousChapter={this.props.onClickPreviousChapter}
           onClickNextChapter={this.props.onClickNextChapter}
-          onSlidingComplete={this.props.onSlidingComplete}
-          animatedSliderBarY={this.animatedSliderBarY}
-          //minimumValue={0}
-          //maximumValue={this.props.totalPageCount - 1}
+          onProgressComplete={this.props.onProgressComplete}
+          animatedProgressBarY={this.animatedProgressBarY}
         />
         <ConfigBar
           ref={ref => this.ConfigBar = ref}
@@ -322,13 +323,14 @@ export default class CoomicBookToolBar extends Component {
   }
 }
 
-CoomicBookToolBar.propTypes = {
+CoomicBookTool.propTypes = {
   chapter: PropTypes.array,
   onClickBackArrow: PropTypes.func,
-  onClickChapterItem: PropTypes.func
+  onClickChapterItem: PropTypes.func,
+  finalPageNumber: PropTypes.number
 }
 
-CoomicBookToolBar.defaultProps = {
+CoomicBookTool.defaultProps = {
   chapter: []
 }
 
@@ -342,7 +344,7 @@ const showOptionBarY = Platform.OS === 'android' ? 0 : height
 
 const showChapterBarX = Platform.OS === 'android' ? 0 : width
 
-const showSliderBarY = Platform.OS === 'android' ? 0 : height
+const showProgressBarY = Platform.OS === 'android' ? 0 : height
 
 const showConfigBarY = Platform.OS === 'android' ? 0 : height
 
@@ -354,7 +356,7 @@ const hideBottomBarY = Platform.OS === 'android' ? 50 : height+50
 
 const hideChapterBarX = Platform.OS === 'android' ? width*2/3 : width*5/3
 
-const hideSliderBarY = Platform.OS === 'android' ? 50 : height+50
+const hideProgressBarY = Platform.OS === 'android' ? 50 : height+50
 
 const hideConfigBarY = Platform.OS === 'android' ? height/2 : height*3/2
 

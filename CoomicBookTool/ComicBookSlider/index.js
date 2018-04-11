@@ -8,14 +8,14 @@ export default class ComicBookSlider extends Component {
     super(props)
     this.state = {
       value: 0,
-      opacity: 0
+      opacity: 0,
+      maximumValue: 1 || this.props.maximumValue,
+      chapter: 1
     }
   }
 
   onSlidingStart = value => {
-    this.setState({
-      opacity: 1
-    })
+    this.setState({ opacity: 1 })
     this.props.onSlidingStart && this.props.onSlidingStart(value)
   }
 
@@ -25,9 +25,7 @@ export default class ComicBookSlider extends Component {
   }
 
   onSlidingComplete = value => {
-    this.setState({
-      opacity: 0
-    }) 
+    this.setState({ opacity: 0 }) 
     this.props.onSlidingComplete && this.props.onSlidingComplete(value)
   }
 
@@ -35,19 +33,25 @@ export default class ComicBookSlider extends Component {
     this.setState({value},done)    
   }
 
+  setChapterMaximumValue = (maximumValue,chapter) => {
+    this.setState({maximumValue,chapter})   
+  }
+
   render() {
     return(
       <View style={styles.renderSliderBar}>
        { this.props.showIndicator && Platform.OS === 'ios' &&
           <View style={[styles.indicator,{opacity: this.state.opacity}]}>
-            <Text style={styles.text}>第一話</Text>
-            <Text style={styles.text}>{(this.state.value + 1) + '/' + (this.props.maximumValue + 1)}</Text>
+            <Text style={styles.text}>{'第' + this.state.chapter + '話'}</Text>
+            <Text style={styles.text}>{(this.state.value + 1) + '/' + (this.state.maximumValue + 1)}</Text>
           </View>
         }
         <Slider
           {...this.props}
           trackStyle={styles.trackStyle}
           value={this.state.value}
+          maximumValue={this.state.maximumValue}
+          minimumValue={0}
           onSlidingStart={this.onSlidingStart}
           onValueChange={this.onValueChange} 
           onSlidingComplete={this.onSlidingComplete}
@@ -71,9 +75,6 @@ const styles = StyleSheet.create({
     left: 7,
     width: 60,
     height: 55
-  },
-  trackStyle: {
-    //height: 2,
   },
   renderSliderBar: {
     flex: 1, 

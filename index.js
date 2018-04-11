@@ -9,7 +9,7 @@ import {
 } from 'react-native'
 import PropTypes from 'prop-types'
 import InteractiveFlatList from 'react-native-interactive-flatList'
-import CoomicBookToolBar from './CoomicBookToolBar'
+import CoomicBookTool from './CoomicBookTool'
 import ComicBookImage from './ComicBookImage'
 
 export default class ComicBook extends PureComponent {
@@ -17,15 +17,18 @@ export default class ComicBook extends PureComponent {
   constructor(props) {
     super(props)
     this.scrollOffset = 0
-    this.pageNumber = 0
+    this.pageNumber = null
+    this.isScroll = false
     this.contentHeight = height
     this.scaleImageHeightArray = new Array() // [{scaleImageHeight: value, scaleImageHeightOffset: value}]
     this.scaleImageHeightOffset = 0
-    this.FlatList = null
+    this.InteractiveFlatList = null
     this.state = {
       isLoading: true
     }
   }
+
+  // life cycle
 
   componentDidMount() {
     const scaleImageHeightArray = this.props.data.map(async (ele,index) => {
@@ -59,30 +62,14 @@ export default class ComicBook extends PureComponent {
     this.props.onEndComicBook && this.props.onEndComicBook(this.pageNumber)
   }
 
-  scrollToTop = () => {
-    const scrollOffset = this.scrollOffset - height/3 < 0 ? 0 : this.scrollOffset - height/3
-    this.FlatList.scrollToOffset({offset: scrollOffset, animated: true })    
-  }
+  renderItem = ({ item, index }) => 
+    <ComicBookImage
+      scaleImageHeight={this.scaleImageHeightArray[index].scaleImageHeight}
+      source={{uri: item.uri}}
+    />
 
-  scrollToBottom = () => {
-    const scrollOffset = this.scrollOffset + height/3 > this.contentHeight ? this.contentHeight :this.scrollOffset + height/3
-    this.FlatList.scrollToOffset({offset: scrollOffset, animated: true})    
-  }
-
-  onScrollBeginDrag = () => {
-    this.CoomicBookToolBar.toolBarResponse()
-  }
-
-  onScroll= ({nativeEvent}) => {
-    this.scrollOffset = nativeEvent.contentOffset.y
-    this.contentHeight = nativeEvent.contentSize.height - nativeEvent.layoutMeasurement.height
-  }
-
-  onViewableItemsChanged = ({ viewableItems, changed }) => {
-    const itemsLength = viewableItems.length
-    if (itemsLength > 0) {
-      this.pageNumber = viewableItems[viewableItems.length -1].key
-    }
+  onLayout = () => {
+    this.pageNumber = this.props.startPageNumber
   }
 
   getItemLayout = (data, index) => {
@@ -93,51 +80,112 @@ export default class ComicBook extends PureComponent {
     }
   }
 
-  renderItem = ({ item, index }) => 
-    <ComicBookImage
-      scaleImageHeight={this.scaleImageHeightArray[index].scaleImageHeight}
-      source={{uri: item.uri}}
-    />
+  onViewableItemsChanged = ({ viewableItems, changed }) => {
+    if (viewableItems.length > 0) {
+      if (this.isScroll) {
+        this.pageNumber = parseInt(viewableItems[0].key) + 1
+      }
+      this.CoomicBookTool.receivePageNumber(this.pageNumber)
+    }
+  }
+
+  // Motion
+
+  onScrollBeginDrag = () => {
+    this.isScroll = true
+    this.CoomicBookTool.receiveAnimationEvent({
+      showNavigationBar: false
+    })
+  }
+
+  onScroll= ({nativeEvent}) => {
+    // 可以換到onLayout？
+    this.scrollOffset = nativeEvent.contentOffset.y
+    this.contentHeight = nativeEvent.contentSize.height - nativeEvent.layoutMeasurement.height
+  }
+
+  onScrollEndDrag = ({nativeEvent}) => {
+    //console.log(nativeEvent)
+  }
+
+  onMomentumScrollEnd = () => {
+    this.isScroll = false
+  }
 
   onDoubleClick = () => {
-    this.CoomicBookToolBar.toolBarResponse(false)
+    this.CoomicBookTool.receiveAnimationEvent({
+      showNavigationBar: false
+    })
   }
 
   onPinchStart = () => {
-    this.CoomicBookToolBar.toolBarResponse(false)
+    this.CoomicBookTool.receiveAnimationEvent({
+      showNavigationBar: false
+    })
   }
 
   onSingleClickTopArea = () => {
-    this.CoomicBookToolBar.toolBarResponse(false,this.scrollToTop)
+    this.CoomicBookTool.receiveAnimationEvent({
+      showNavigationBar: false,
+      onEndreceiveAnimationEvent: this.rollUp
+    })
   }
 
   onSingleClickMiddleArea = () => {
-    this.CoomicBookToolBar.toolBarResponse(true)
+    this.CoomicBookTool.receiveAnimationEvent({
+      showNavigationBar: true
+    })
   }
 
   onSingleClickBottomArea = () => {
-    this.CoomicBookToolBar.toolBarResponse(false,this.scrollToBottom)
+    this.CoomicBookTool.receiveAnimationEvent({
+      showNavigationBar: false,
+      onEndreceiveAnimationEvent: this.rollDown
+    })
   }
 
   onClickChapterItem = pageNumber => {
-    this.CoomicBookToolBar.hideChapterBar()
-    this.FlatList.scrollToIndex({animated: false, index: pageNumber - 1})
+    this.CoomicBookTool.receiveAnimationEvent({
+      showNavigationBar: false
+    })
+    this.jumpToPage(pageNumber)
   }
 
-  onSlidingComplete = page => {
-    this.FlatList.scrollToIndex({animated: false, index: pageNumber})
+  onProgressComplete = pageNumber => {
+
+    this.jumpToPage(pageNumber)
   }
 
-  onClickPreviousChapter = () => {
-    console.warn('onClickPreviousChapter')
+  onClickPreviousChapter = pageNumber => {
+    this.jumpToPage(pageNumber)
   }
 
-  onClickNextChapter = () => {
-    console.warn('onClickNextChapter')
+  onClickNextChapter = pageNumber => {    
+    if (this.props.chapter[this.props.chapter.length -1]) {
+      const lastPageNumber = this.props.chapter[this.props.chapter.length -1].pageNumber
+      if (lastPageNumber && (pageNumber >= lastPageNumber)) {
+        alert('已是最後一話')
+      } else {
+        this.jumpToPage(pageNumber)
+      }
+    }
   }
 
-  sleep = ms => {
-    return new Promise(resolve => setTimeout(resolve, ms));
+  // function
+
+  rollUp = () => {
+    const scrollOffset = this.scrollOffset - height/3 < 0 ? 0 : this.scrollOffset - height/3
+    this.InteractiveFlatList.scrollToOffset({offset: scrollOffset, animated: true })
+  }
+
+  rollDown = () => {
+    const scrollOffset = this.scrollOffset + height/3 > this.contentHeight ? this.contentHeight :this.scrollOffset + height/3
+    this.InteractiveFlatList.scrollToOffset({offset: scrollOffset, animated: true})
+  }
+
+  jumpToPage = pageNumber => {
+    this.pageNumber = pageNumber
+    this.InteractiveFlatList.scrollToIndex({animated: false, index: this.pageNumber - 1})    
   }
 
   render() {    
@@ -156,13 +204,13 @@ export default class ComicBook extends PureComponent {
             <InteractiveFlatList
               ref={ ref => {
                 if (ref) {
-                  this.FlatList = ref.getFlatList()
+                  this.InteractiveFlatList = ref.getFlatList()
                 }
               }}
               data={this.props.data}
               initialNumToRender={this.props.startPageNumber -1}
               initialScrollIndex={this.props.startPageNumber -1}
-              renderItem={this.renderItem}
+              renderItem={this.props.renderItem ? this.props.renderItem : this.renderItem}
               getItemLayout={this.getItemLayout}
               onPinchStart={this.onPinchStart}
               onDoubleClick={this.onDoubleClick}
@@ -172,13 +220,17 @@ export default class ComicBook extends PureComponent {
               onScrollBeginDrag={this.onScrollBeginDrag}
               onScroll={this.onScroll}
               onViewableItemsChanged={this.onViewableItemsChanged}
+              onLayout={this.onLayout}
+              onScrollEndDrag={this.onScrollEndDrag}
+              onMomentumScrollEnd={this.onMomentumScrollEnd}
             />
-            <CoomicBookToolBar 
-              ref= { ref => this.CoomicBookToolBar = ref }
+            <CoomicBookTool 
+              ref= { ref => this.CoomicBookTool = ref }
               chapter={this.props.chapter}
+              finalPageNumber={this.props.data.length}
               onClickBackArrow={this.props.onClickBackArrow}
               onClickChapterItem={this.onClickChapterItem}
-              onSlidingComplete={this.onSlidingComplete}
+              onProgressComplete={this.onProgressComplete}
               onClickPreviousChapter={this.onClickPreviousChapter}
               onClickNextChapter={this.onClickNextChapter}
             />
@@ -194,12 +246,14 @@ ComicBook.propTypes = {
   chapter: PropTypes.array,
   onClickBackArrow: PropTypes.func,
   onEndComicBook: PropTypes.func,
+  renderItem: PropTypes.func,
   startPageNumber: PropTypes.number
 }
 
 ComicBook.defaultProps = {
   data: [],
-  chapter: []
+  chapter: [],
+  startPageNumber: 1
 }
 
 const { width, height } = Dimensions.get('window')
