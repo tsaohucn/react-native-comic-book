@@ -40,9 +40,18 @@ public class MainActivity extends ReactActivity {
 
  Props | Description | Type 
 ------ | ------ | ------
-data | Your array of images |Array[object]
-chapter | Your chapter structure |Array[object]
-onClickBackArrow | Fired after click back-arrow icon|function
+onClickBackArrow | fired after you click back-arrow icon | function
+onEndComicBook | fired after end of your comic-book | function
+startPageNumber| initial page-number of your comic-book | Integer
+chapter | chapter structure of your comic-book | Array[object]
+data | content of your comic-book | Array[object]
+renderItem | how to render your comic-book | function
+getItemLayout | your comic-book itemLayout | function
+
+- chapter : `[{ chapter : (String)(Reuired), pageNumber : (String)(Reuired), title : (String)(Reuired) }]`
+  - chapter : (String)(Reuired)
+  - pageNumber : (Int)(Reuired)
+  - title : (String)(Reuired)
 
 - data:`[{key: $unique_key, uri: $your_image_source,imageHeight: $height_of_image,imageWidth:$width_of_image}]`
 	- key: (String)(Reuired)
@@ -50,10 +59,6 @@ onClickBackArrow | Fired after click back-arrow icon|function
 	- imageHeight: (Int)(Option)
 	- imageWidth: (Int)(Option)
 
-- chapter:`[{{key: $unique_key,title: $your_chapter_title, startPage: $start_page_of_this_chapter}]`
-	- key: (String)(Reuired)
-	- title: (String)(Reuired)
-	- startPage: (Int)(Reuired)
 	 
 ## Usage example
 
