@@ -17,6 +17,7 @@ const ChapterBar = ({ animatedChapterBarX, onClickChapterItem, chapter }) => (
   >
     <FlatList
       data={chapter}
+      keyExtractor={item => item.chapter}
       renderItem={({ item }) => 
         <TouchableWithoutFeedback
           onPress={() => {

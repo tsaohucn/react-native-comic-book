@@ -209,14 +209,14 @@ export default class ComicBook extends PureComponent {
               onSingleClickMiddleArea={this.onSingleClickMiddleArea}
               onSingleClickBottomArea={this.onSingleClickBottomArea}
               data={this.props.data}
-              initialScrollIndex={this.props.initialScrollIndex ? this.props.initialScrollIndex : this.props.startPageNumber -1}
               renderItem={this.props.renderItem ? this.props.renderItem : this.renderItem}
               getItemLayout={this.props.getItemLayout ? this.props.getItemLayout : this.getItemLayout}
-              onLayout={this.props.onLayout ? this.props.onLayout : this.onLayout}
-              onViewableItemsChanged={this.props.onViewableItemsChanged ? this.props.onViewableItemsChanged : this.onViewableItemsChanged}
-              onScrollBeginDrag={this.props.onScrollBeginDrag ? this.props.onScrollBeginDrag : this.onScrollBeginDrag}
-              onScroll={this.props.onScroll ? this.props.onScroll : this.onScroll}
-              onMomentumScrollEnd={this.props.onMomentumScrollEnd ? this.props.onMomentumScrollEnd : this.onMomentumScrollEnd}
+              initialScrollIndex={this.props.startPageNumber -1}
+              onLayout={this.onLayout}
+              onViewableItemsChanged={this.onViewableItemsChanged}
+              onScrollBeginDrag={this.onScrollBeginDrag}
+              onScroll={this.onScroll}
+              onMomentumScrollEnd={this.onMomentumScrollEnd}
             />
             <CoomicBookTool 
               ref= { ref => this.CoomicBookTool = ref }
@@ -237,10 +237,11 @@ export default class ComicBook extends PureComponent {
 
 ComicBook.propTypes = {
   data: PropTypes.array,
+  renderItem: PropTypes.func,
+  getItemLayout: PropTypes.func,
   chapter: PropTypes.array,
   onClickBackArrow: PropTypes.func,
   onEndComicBook: PropTypes.func,
-  renderItem: PropTypes.func,
   startPageNumber: PropTypes.number
 }
 
