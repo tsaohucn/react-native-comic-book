@@ -48,16 +48,16 @@ data | content of your comic-book | Array[object]
 renderItem | how to render your comic-book | function
 getItemLayout | your comic-book itemLayout | function
 
-- chapter : `[{ chapter : (String)(Reuired), pageNumber : (String)(Reuired), title : (String)(Reuired) }]`
-  - chapter : (String)(Reuired)
-  - pageNumber : (Int)(Reuired)
-  - title : (String)(Reuired)
+- chapter : `[{ chapter: (String)(Reuired), pageNumber: (String)(Reuired), title: (String)(Reuired) }]`
+  - chapter : number of this chapter
+  - pageNumber : pageNumber of this chapter
+  - title : title of this chapter
 
-- data:`[{key: $unique_key, uri: $your_image_source,imageHeight: $height_of_image,imageWidth:$width_of_image}]`
-	- key: (String)(Reuired)
-	- uri: (String)(Reuired)
-	- imageHeight: (Int)(Option)
-	- imageWidth: (Int)(Option)
+- data : `[{ key: (String)(Reuired), uri: (String)(Reuired),imageHeight: (Int)(Option),(Int)(Option) }]`
+	- key : (String)(Reuired)
+	- uri : (String)(Reuired)
+	- imageHeight : (Int)(Option)
+	- imageWidth : (Int)(Option)
 
 	 
 ## Usage example
@@ -74,15 +74,21 @@ export default class App extends Component {
   }
 
   onClickBackArrow = () => {
-    console.warn('返回')
+    console.log('返回')
+  }
+
+  onEndComicBook = (pageNumber) => {
+    console.log(pageNumber)
   }
 
   render() {
     return (
       <ComicBook
-        data={data}
-        chapter={chapter}
         onClickBackArrow={this.onClickBackArrow}
+        onEndComicBook={this.onEndComicBook}
+        startPageNumber={30}
+        chapter={chapter}
+        data={data}
       />
     )
   }
@@ -100,15 +106,15 @@ const data = Array(100).fill().map((e,index) => ({
 }))
 
 const chapter = [
-  {key: '1', title: '1-1.精氣', startPage: 1},
-  {key: '2', title: '2-2.鎮寢之寶', startPage: 11},
-  {key: '3', title: '3-4.夢中人', startPage: 16},
-  {key: '4', title: '4-4.馬克思主義哲學', startPage: 26},
-  {key: '5', title: '5-5.飛來豔福', startPage: 39},
-  {key: '6', title: '6-6.天降之物', startPage: 48},
-  {key: '7', title: '7-7.演員的自我修飾', startPage: 69},
-  {key: '8', title: '8-8.相遇', startPage: 89},
-  {key: '9', title: '9-9.亞拉那一卡？', startPage: 95}
+  { chapter: '1', pageNumber: 1, title: '1-1.精氣' },
+  { chapter: '2', pageNumber: 11, title: '2-2.鎮寢之寶' },
+  { chapter: '3', pageNumber: 16, title: '3-4.夢中人' },
+  { chapter: '4', pageNumber: 26, title: '4-4.馬克思主義哲學' },
+  { chapter: '5', pageNumber: 39, title: '5-5.飛來豔福' },
+  { chapter: '6', pageNumber: 48, title: '6-6.天降之物' },
+  { chapter: '7', pageNumber: 69, title: '7-7.演員的自我修飾' },
+  { chapter: '8', pageNumber: 89, title: '8-8.相遇' },
+  { chapter: '9', pageNumber: 95, title: '9-9.亞拉那一卡？' }
 ]
 ```
 
@@ -123,34 +129,41 @@ export default class App extends Component {
   }
 
   onClickBackArrow = () => {
-    console.warn('返回')
+    console.log('返回')
+  }
+  
+  onEndComicBook = (pageNumber) => {
+    console.log(pageNumber)
   }
 
   render() {
     return (
       <ComicBook
-        data={data}
-        chapter={chapter}
         onClickBackArrow={this.onClickBackArrow}
+        onClickBackArrow={this.onClickBackArrow}
+        onEndComicBook={this.onEndComicBook}
+        startPageNumber={3}
+        chapter={chapter}
+        data={data}
       />
     )
   }
 }
 
 const data = [
-  {key: '1', uri: 'https://attach.setn.com/newsimages/2017/08/12/1007275-XXL.jpg'},
-  {key: '2', uri: 'https://images.900.tw/upload_file/41/content/d3c75448-590a-564b-7a69-48efdd127efc.png'},
-  {key: '3', uri: 'https://pic.pimg.tw/leo96628/1453875282-2133772788_n.jpg?v=1453875697'},
-  {key: '4', uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCuHPWyQMdppcxHtB4t-1sfjjcaxsFZ83jrgrHeCieuAy16PFDjA'},
-  {key: '5', uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFOCawkKUoECSPBmrdaUQkSzcAyzAtTtqrip5OPO6xfNGYYBEb'},
-  {key: '6', uri: 'https://img.chinatimes.com/newsphoto/2017-05-25/656/a19a00_p_02_02.jpg'},
-  {key: '7', uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0mIVh-vZL8YX7XK9OBGSfxQS5_-6aI0kksUDIRkfD4_56QQOKSw'},
-  {key: '8', uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRXjGshChW7BLaqJ0QYVMHkUufM5udR1w8uD-yEjiGhpJK5-Rs'},
-  {key: '9', uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8eo8HBDp121_uEyFArtVhuUbgc3lHg1aeYUUGAbFIZsn9inWO'}
+  { key: '1', uri: 'https://attach.setn.com/newsimages/2017/08/12/1007275-XXL.jpg' },
+  { key: '2', uri: 'https://images.900.tw/upload_file/41/content/d3c75448-590a-564b-7a69-48efdd127efc.png' },
+  { key: '3', uri: 'https://pic.pimg.tw/leo96628/1453875282-2133772788_n.jpg?v=1453875697' },
+  { key: '4', uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCuHPWyQMdppcxHtB4t-1sfjjcaxsFZ83jrgrHeCieuAy16PFDjA' },
+  { key: '5', uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFOCawkKUoECSPBmrdaUQkSzcAyzAtTtqrip5OPO6xfNGYYBEb' },
+  { key: '6', uri: 'https://img.chinatimes.com/newsphoto/2017-05-25/656/a19a00_p_02_02.jpg' },
+  { key: '7', uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0mIVh-vZL8YX7XK9OBGSfxQS5_-6aI0kksUDIRkfD4_56QQOKSw' },
+  { key: '8', uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRXjGshChW7BLaqJ0QYVMHkUufM5udR1w8uD-yEjiGhpJK5-Rs' },
+  { key: '9', uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8eo8HBDp121_uEyFArtVhuUbgc3lHg1aeYUUGAbFIZsn9inWO' }
 ]
 
 const chapter = [
-  {key: '1', title: '1-1.精氣', startPage: 1},
-  {key: '2', title: '2-2.鎮寢之寶', startPage: 6}
+  { chapter: '1', pageNumber: 1, title: '1-1.精氣' },
+  { chapter: '2', pageNumber: 6, title: '2-2.鎮寢之寶' }
 ]
 ```
