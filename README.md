@@ -167,3 +167,14 @@ const chapter = [
   { chapter: '2', pageNumber: 6, title: '2-2.鎮寢之寶' }
 ]
 ```
+
+## Custom Your renderItem and getItemLayout
+
+```javascript
+  renderItem = ({ item, index }) => 
+    <View style={styles.view}>
+      <Text>{index + 1}</Text>
+    </View>
+
+  getItemLayout = (data, index) => ({ length: 500, offset: 500*index, index })
+```
