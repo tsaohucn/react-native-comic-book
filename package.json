@@ -36,7 +36,7 @@
     "url": "http://192.168.0.200/xc/react-native-comic-book/issues"
   },
   "jest": {
-    "preset": "react-native"
+    
   },
   "homepage": "http://192.168.0.200/xc/react-native-comic-book#readme"
 }
