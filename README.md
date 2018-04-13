@@ -4,8 +4,11 @@
 1. Run`npm install git+http://192.168.0.200/xc/react-native-comic-book.git --save`
 
 2. react-native-comic-book use some native library so that you have to link **those library below** before you use react-native-comic-book
+
 	`react-native link react-native-vector-icons`
+	
 	`react-native link react-native-screen-brightness`
+	
 	`react-native link react-native-gesture-handler`
 	
 3. Open your MainActivity.java to change the code to below
