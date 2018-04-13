@@ -45,7 +45,7 @@ noPreviousChapter | fired when you click `PreviousChapter` button but there's no
 noNextChapter | fired when you click `NextChapter` button but there's no any next chapter | function
 noPreviousPageNumber | fired when you click `TopArea` to page up but it's alerady in the first page with no previous page| function
 noNextPageNumber | fired when you click `BottomArea` to page down but it's alerady in the last page with no next page | function
-startPageNumber| initial page number of your comic-book | Integer
+initialPageNumber| initial page number of your comic-book | Integer
 chapter | chapter structure of your comic-book | Array[object]
 content | content of your comic-book | Array[object]
 renderContent | how to render your content | function
