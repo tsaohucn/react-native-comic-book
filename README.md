@@ -37,25 +37,39 @@ public class MainActivity extends ReactActivity {
 ```
 ## API
 
- Props | Description | Type 
+ Props | Description | Type | Default
 ------ | ------ | ------
-onClickBackArrow | fired after you click back-arrow icon | function
-onEndComicBook | fired after end of your comic-book | function
-noPreviousChapter | fired when you click `PreviousChapter` button but there's no any previous chapter | function
-noNextChapter | fired when you click `NextChapter` button but there's no any next chapter | function
-noPreviousPageNumber | fired when you click `TopArea` to page up but it's alerady in the first page with no previous page| function
-noNextPageNumber | fired when you click `BottomArea` to page down but it's alerady in the last page with no next page | function
-initialPageNumber| initial page number of your comic-book | Integer
-chapter | chapter structure of your comic-book | Array[object]
-content | content of your comic-book | Array[object]
-renderContent | how to render your content | function
-getContentLayout | layout of your content | function
+onClickBackArrow | fired after you click back-arrow icon | function | none
+onEndComicBook | fired after end of your comic-book | function | none
+noPreviousChapter | fired when you click `PreviousChapter` button but there's no any previous chapter | function | none
+noNextChapter | fired when you click `NextChapter` button but there's no any next chapter | function | none
+noPreviousPageNumber | fired when you click `TopArea` to page up but it's alerady in the first page with no previous page| function | none
+noNextPageNumber | fired when you click `BottomArea` to page down but it's alerady in the last page with no next page | function | none
+initialPageNumber| initial page number of your comic-book | Integer | 1
+chapter | chapter structure of your comic-book | Array[object] | []
+content | content of your comic-book | Array[object] | []
+renderContent(required) | how to render your content | function | none
+getContentLayout(required) | layout of your content | function | none
 
 - chapter : `[{ pageNumber: (Int)(Reuired)(Unique), title: (String)(Option) }]`
   - pageNumber : pageNumber of this chapter
   - title : title of this chapter
 
 - content : It depends on your renderContent function
+
+## Remember custom your renderContent and getContentLayout at same time
+
+- The props as same as `renderItem` `getItemLayout` of FlatList
+
+```JSX
+  renderContent = ({ item, index }) => {
+    // return your content render
+  }
+
+  getContentLayout = (data, index) => { 
+    // return your content layout
+  }
+```
 
 ## Usage example
 
@@ -214,18 +228,4 @@ const styles = {
 
 ```JSX
 
-```
-
-## Remember custom your renderContent and getContentLayout at same time
-
-- The props as same as `renderItem` `getItemLayout` of FlatList
-
-```JSX
-  renderContent = ({ item, index }) => {
-    // return your content render
-  }
-
-  getContentLayout = (data, index) => { 
-    // return your content layout
-  }
 ```

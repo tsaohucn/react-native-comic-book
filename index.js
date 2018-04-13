@@ -172,9 +172,9 @@ export default class ComicBook extends PureComponent {
 
 ComicBook.propTypes = {
   initialPageNumber: PropTypes.number,
+  renderContent: PropTypes.func.isRequired,
+  getContentLayout: PropTypes.func.isRequired,
   content: PropTypes.array,
-  renderContent: PropTypes.func,
-  getContentLayout: PropTypes.func,
   chapter: PropTypes.array,
   onClickBackArrow: PropTypes.func,
   onEndComicBook: PropTypes.func,
