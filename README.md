@@ -38,7 +38,7 @@ public class MainActivity extends ReactActivity {
 ## API
 
  Props | Description | Type | Default
------- | ------ | ------
+------ | ------ | ------ | ------
 onClickBackArrow | fired after you click back-arrow icon | function | none
 onEndComicBook | fired after end of your comic-book | function | none
 noPreviousChapter | fired when you click `PreviousChapter` button but there's no any previous chapter | function | none
