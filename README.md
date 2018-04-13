@@ -41,24 +41,22 @@ public class MainActivity extends ReactActivity {
 ------ | ------ | ------
 onClickBackArrow | fired after you click back-arrow icon | function
 onEndComicBook | fired after end of your comic-book | function
-startPageNumber| initial page-number of your comic-book | Integer
+noPreviousChapter | fired when you click `PreviousChapter` button but there's no any previous chapter | function
+noNextChapter | fired when you click `NextChapter` button but there's no any next chapter | function
+noPreviousPageNumber | fired when you click `TopArea` to page up but it's alerady in the first page with no previous page| function
+noNextPageNumber | fired when you click `BottomArea` to page down but it's alerady in the last page with no next page | function
+startPageNumber| initial page number of your comic-book | Integer
 chapter | chapter structure of your comic-book | Array[object]
-data | content of your comic-book | Array[object]
-renderItem | how to render your comic-book | function
-getItemLayout | your comic-book itemLayout | function
+content | content of your comic-book | Array[object]
+renderContent | how to render your content | function
+getContentLayout | layout of your content | function
 
-- chapter : `[{ chapter: (String)(Reuired), pageNumber: (String)(Reuired), title: (String)(Reuired) }]`
-  - chapter : number of this chapter
+- chapter : `[{ pageNumber: (Int)(Reuired)(Unique), title: (String)(Option) }]`
   - pageNumber : pageNumber of this chapter
   - title : title of this chapter
 
-- data : `[{ key: (String)(Reuired), uri: (String)(Reuired),imageHeight: (Int)(Option),(Int)(Option) }]`
-	- key : unique key
-	- uri : uri of your image
-	- imageHeight : height of your image
-	- imageWidth : width of your image
+- content : It depends on your renderContent function
 
-	 
 ## Usage example
 
 1. Novel Example
