@@ -261,7 +261,7 @@ export default class CoomicBookTool extends Component {
     }
   }
 
-  receiveAnimationEvent = ({showNavigationBar,onEndreceiveAnimationEvent}) => {
+  toolAnimation = ({showNavigationBar,onAnimationComplete}) => {
     if (this.navigationBarIsShow) {
       this.hideNavigationBar()
     } else if (this.optionBarIsShow) {
@@ -274,11 +274,11 @@ export default class CoomicBookTool extends Component {
       this.hideConfigBar()
     } else {
       showNavigationBar && this.showNavigationBar()
-      onEndreceiveAnimationEvent && onEndreceiveAnimationEvent()
+      onAnimationComplete && onAnimationComplete()
     }
   }
 
-  receivePageNumber = pageNumber => {
+  syncPageNumber = pageNumber => {
     this.ProgressBar.receivePageNumber(pageNumber)
     this.ChapterBar.receivePageNumber(pageNumber)
   }

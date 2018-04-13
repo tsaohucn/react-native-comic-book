@@ -15,8 +15,10 @@ export default class ComicBook extends PureComponent {
 
   constructor(props) {
     super(props)
-    this.pageNumber = null
     this.InteractiveFlatList = null
+    this.CoomicBookTool = null
+    this.pageNumber = null
+    this.finalPageNumber = null
   }
 
   componentWillUnmount() {
@@ -26,62 +28,71 @@ export default class ComicBook extends PureComponent {
   onViewableItemsChanged = ({ viewableItems, changed }) => {
     if (viewableItems.length > 0) {
       this.pageNumber = parseInt(viewableItems[0].key) + 1
-      this.CoomicBookTool.receivePageNumber(this.pageNumber)
+      this.CoomicBookTool.syncPageNumber(this.pageNumber)
     }
   }
 
   onScrollBeginDrag = () => {
-    this.CoomicBookTool.receiveAnimationEvent({
+    this.CoomicBookTool.toolAnimation({
       showNavigationBar: false
     })
   }
 
   onDoubleClick = () => {
-    this.CoomicBookTool.receiveAnimationEvent({
+    this.CoomicBookTool.toolAnimation({
       showNavigationBar: false
     })
   }
 
   onPinchStart = () => {
-    this.CoomicBookTool.receiveAnimationEvent({
+    this.CoomicBookTool.toolAnimation({
       showNavigationBar: false
     })
   }
 
   onSingleClickTopArea = () => {
-    this.CoomicBookTool.receiveAnimationEvent({
+    this.CoomicBookTool.toolAnimation({
       showNavigationBar: false,
-      onEndreceiveAnimationEvent: this.jumpUp
+      onAnimationComplete: this.goToPreviousPageNumber
     })
   }
 
   onSingleClickMiddleArea = () => {
-    this.CoomicBookTool.receiveAnimationEvent({
+    this.CoomicBookTool.toolAnimation({
       showNavigationBar: true
     })
   }
 
   onSingleClickBottomArea = () => {
-    this.CoomicBookTool.receiveAnimationEvent({
+    this.CoomicBookTool.toolAnimation({
       showNavigationBar: false,
-      onEndreceiveAnimationEvent: this.jumpDown
+      onAnimationComplete: this.goToNextPageNumber
     })
   }
 
   onClickChapterItem = pageNumber => {
-    this.CoomicBookTool.receiveAnimationEvent({
+    this.CoomicBookTool.toolAnimation({
       showNavigationBar: false
     })
-    this.jumpPage(pageNumber)
+    this.InteractiveFlatList.scrollToIndex({
+      animated: false, 
+      index: pageNumber - 1
+    })    
   }
 
   onProgressComplete = pageNumber => {
-    this.jumpPage(pageNumber)
+    this.InteractiveFlatList.scrollToIndex({
+      animated: false, 
+      index: pageNumber - 1
+    }) 
   }
 
   onClickPreviousChapter = pageNumber => {
     if (pageNumber) {
-      this.jumpPage(pageNumber)
+      this.InteractiveFlatList.scrollToIndex({
+        animated: false, 
+        index: pageNumber - 1
+      })
     } else {
       this.props.noPreviousChapter && this.props.noPreviousChapter()
     }
@@ -89,27 +100,43 @@ export default class ComicBook extends PureComponent {
 
   onClickNextChapter = pageNumber => { 
     if (pageNumber) {
-      this.jumpPage(pageNumber)
+      this.InteractiveFlatList.scrollToIndex({
+        animated: false, 
+        index: pageNumber - 1
+      })
     } else {
       this.props.noNextChapter && this.props.noNextChapter()
     }
   }
 
-  jumpUp = () => {
-    this.jumpPage(this.pageNumber - 1 < 1 ? 1 : this.pageNumber - 1)
+  goToPreviousPageNumber = () => {
+    const previousPageNumber = this.pageNumber - 1
+    if (previousPageNumber < 1) {
+      this.props.noPreviousPageNumber && this.props.noPreviousPageNumber()
+    } else {
+      this.InteractiveFlatList.scrollToIndex({
+        animated: true, 
+        index: previousPageNumber - 1
+      })
+    }
   }
 
-  jumpDown = () => {
-    this.jumpPage(this.pageNumber + 1 > this.props.content.length ? this.props.content.length : this.pageNumber + 1)
-  }
-
-  jumpPage = pageNumber => {
-    this.InteractiveFlatList.scrollToIndex({animated: true, index: pageNumber - 1})    
+  goToNextPageNumber = () => {
+    const nextPageNumber = this.pageNumber + 1
+    if (nextPageNumber > this.finalPageNumber) {
+      this.props.noNextPageNumber && this.props.noNextPageNumber()
+    } else {
+      this.InteractiveFlatList.scrollToIndex({
+        animated: true, 
+        index: nextPageNumber - 1
+      })
+    }
   }
 
   render() { 
 
     this.pageNumber = this.props.startPageNumber
+    this.finalPageNumber = this.props.content.length
 
     return (
       <View style={styles.view}>
@@ -122,12 +149,10 @@ export default class ComicBook extends PureComponent {
           onSingleClickBottomArea={this.onSingleClickBottomArea}
           onViewableItemsChanged={this.onViewableItemsChanged}
           onScrollBeginDrag={this.onScrollBeginDrag}
-          onScroll={this.onScroll}
-          onMomentumScrollEnd={this.onMomentumScrollEnd}
+          initialScrollIndex={this.props.initialPageNumber -1}
           data={this.props.content}
           renderItem={this.props.renderContent}
           getItemLayout={this.props.getContentLayout}
-          initialScrollIndex={this.props.startPageNumber -1}
         />
         <CoomicBookTool 
           ref= { ref => this.CoomicBookTool = ref }
@@ -135,8 +160,8 @@ export default class ComicBook extends PureComponent {
           onProgressComplete={this.onProgressComplete}
           onClickPreviousChapter={this.onClickPreviousChapter}
           onClickNextChapter={this.onClickNextChapter}
+          finalPageNumber={this.finalPageNumber}
           chapter={this.props.chapter}
-          finalPageNumber={this.props.content.length}
           onClickBackArrow={this.props.onClickBackArrow}
         />      
       </View>
@@ -146,7 +171,7 @@ export default class ComicBook extends PureComponent {
 
 
 ComicBook.propTypes = {
-  startPageNumber: PropTypes.number,
+  initialPageNumber: PropTypes.number,
   content: PropTypes.array,
   renderContent: PropTypes.func,
   getContentLayout: PropTypes.func,
@@ -154,7 +179,9 @@ ComicBook.propTypes = {
   onClickBackArrow: PropTypes.func,
   onEndComicBook: PropTypes.func,
   noPreviousChapter: PropTypes.func,
-  noNextChapter: PropTypes.func
+  noNextChapter: PropTypes.func,
+  noPreviousPageNumber: PropTypes.func,
+  noNextPageNumber: PropTypes.func
 }
 
 ComicBook.defaultProps = {

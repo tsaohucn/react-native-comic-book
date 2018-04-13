@@ -32,7 +32,7 @@ export default class ProgressBar extends Component {
     const previousChapterPageNumbers = chapterPageNumbers.filter(_pageNumber => _pageNumber < pageNumber)
     const nextChapterPageNumbers = chapterPageNumbers.filter(_pageNumber => _pageNumber > pageNumber)
     this.previousChapterPageNumber = previousChapterPageNumbers[previousChapterPageNumbers.length - 1]
-    this.nextChapterPageNumbers = nextChapterPageNumbers[0]
+    this.nextChapterPageNumber = nextChapterPageNumbers[0]
     this.setState({
       value: pageNumber - 1
     })
