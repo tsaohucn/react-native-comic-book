@@ -62,119 +62,173 @@ getItemLayout | your comic-book itemLayout | function
 	 
 ## Usage example
 
+1. Novel Example
+
 ```Javascript
 import React, { Component } from 'react'
-import { Dimensions } from 'react-native'
+import { 
+  View, 
+  Text,
+  Button,
+  Dimensions
+} from 'react-native'
+import { StackNavigator } from 'react-navigation'
+import getSlideFromRightTransition from 'react-navigation-slide-from-right-transition'
 import ComicBook from 'react-native-comic-book'
 
-export default class App extends Component {
+class HomeScreen extends Component {
+  render() {
+    return (
+      <View style={styles.home}>
+        <Text>Home</Text>
+        <Button
+          title="Go To ComicBook"
+          onPress={() => this.props.navigation.navigate('ComicBook')}
+        />
+      </View>
+    );
+  }
+}
+
+class ComicBookScreen extends Component {
 
   constructor(props) {
     super(props)
   }
 
-  onClickBackArrow = () => {
-    console.log('返回')
-  }
-
-  onEndComicBook = (pageNumber) => {
+  onEndComicBook = (pageNumber) =>  {
     console.log(pageNumber)
   }
+
+  onClickBackArrow = () => {
+    this.props.navigation.goBack()
+  }
+
+  noPreviousChapter = () => {
+    console.log('沒有上一回')
+  }
+
+  noNextChapter = () => {
+    console.log('沒有下一回')
+  }
+
+  noPreviousPageNumber = () => {
+    console.log('沒有上一頁')
+  }
+
+  noNextPageNumber = () => {
+    console.log('沒有下一頁')
+  }
+
+  renderContent = ({ item, index }) => 
+    <View style={styles.content}>
+      <View style={styles.pageNumber}>
+        <Text>{index + 1}</Text>
+      </View>
+      <View style={styles.novel}>
+        <Text>{item.novel}</Text>
+      </View>
+    </View>
+
+  getContentLayout = (data, index) => ({ length: 500, offset: 500*index, index })
 
   render() {
     return (
       <ComicBook
         onClickBackArrow={this.onClickBackArrow}
         onEndComicBook={this.onEndComicBook}
-        startPageNumber={30}
+        noPreviousChapter={this.noPreviousChapter}
+        noNextChapter={this.noNextChapter}
+        noPreviousPageNumber={this.noPreviousPageNumber}
+        noNextPageNumber={this.noNextPageNumber}
+        content={content}
+        renderContent={this.renderContent}
+        getContentLayout={this.getContentLayout}
+        initialPageNumber={30}
         chapter={chapter}
-        data={data}
       />
-    )
+    );
   }
 }
 
-const { width, height } = Dimensions.get('window')
+export default class App extends React.Component {
+  render() {
+    return <RootStack />
+  }
+}
 
-const newWidth = width.toFixed(0)
+const RootStack = StackNavigator(
+  {
+    Home: {
+      screen: HomeScreen,
+    },
+    ComicBook: {
+      screen: ComicBookScreen,
+    }
+  },
+  {
+    initialRouteName: 'Home',
+    headerMode: 'none',
+    transitionConfig: getSlideFromRightTransition
+  }
+)
 
-const data = Array(100).fill().map((e,index) => ({ 
-	key: index.toString(),
-	uri: 'https://picsum.photos/'+ newWidth + '/' + newWidth + '?image=' + index,
-	imageHeight: newWidth,
-	imageWidth: newWidth
+const content = Array(100).fill().map((e,index) => ({
+  key: index.toString(),
+  novel: '你的小說內容'
 }))
 
 const chapter = [
-  { chapter: '1', pageNumber: 1, title: '1-1.精氣' },
-  { chapter: '2', pageNumber: 11, title: '2-2.鎮寢之寶' },
-  { chapter: '3', pageNumber: 16, title: '3-4.夢中人' },
-  { chapter: '4', pageNumber: 26, title: '4-4.馬克思主義哲學' },
-  { chapter: '5', pageNumber: 39, title: '5-5.飛來豔福' },
-  { chapter: '6', pageNumber: 48, title: '6-6.天降之物' },
-  { chapter: '7', pageNumber: 69, title: '7-7.演員的自我修飾' },
-  { chapter: '8', pageNumber: 89, title: '8-8.相遇' },
-  { chapter: '9', pageNumber: 95, title: '9-9.亞拉那一卡？' }
+  { pageNumber: 76, title: '戰役' },
+  { pageNumber: 5, title: '精氣' },
+  { pageNumber: 29, title: '鎮寢之寶' },
+  { pageNumber: 16, title: '夢中人' },
+  { pageNumber: 39, title: '飛來豔福' },
+  { pageNumber: 26, title: '馬克思主義哲學' },
+  { pageNumber: 69, title: '演員的自我修飾' },
+  { pageNumber: 48, title: '天降之物' },
+  { pageNumber: 95, title: '亞拉那一卡？' },
+  { pageNumber: 89, title: '相遇' }
 ]
-```
 
-```javascript
-import React, { Component } from 'react'
-import ComicBook from 'react-native-comic-book'
-
-export default class App extends Component {
-
-  constructor(props) {
-    super(props)
-  }
-
-  onClickBackArrow = () => {
-    console.log('返回')
-  }
-
-  onEndComicBook = (pageNumber) => {
-    console.log(pageNumber)
-  }
-
-  render() {
-    return (
-      <ComicBook
-        onClickBackArrow={this.onClickBackArrow}
-        onClickBackArrow={this.onClickBackArrow}
-        onEndComicBook={this.onEndComicBook}
-        startPageNumber={3}
-        chapter={chapter}
-        data={data}
-      />
-    )
-  }
+const styles = { 
+  home: {
+    flex: 1, 
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  content: {
+    backgroundColor: 'white', 
+    borderBottomWidth: 1, 
+    height: 500
+  },
+  pageNumber: {
+    flex: 1
+  },
+  novel: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center'
+  } 
 }
-
-const data = [
-  { key: '1', uri: 'https://attach.setn.com/newsimages/2017/08/12/1007275-XXL.jpg' },
-  { key: '2', uri: 'https://images.900.tw/upload_file/41/content/d3c75448-590a-564b-7a69-48efdd127efc.png' },
-  { key: '3', uri: 'https://pic.pimg.tw/leo96628/1453875282-2133772788_n.jpg?v=1453875697' },
-  { key: '4', uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCuHPWyQMdppcxHtB4t-1sfjjcaxsFZ83jrgrHeCieuAy16PFDjA' },
-  { key: '5', uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFOCawkKUoECSPBmrdaUQkSzcAyzAtTtqrip5OPO6xfNGYYBEb' },
-  { key: '6', uri: 'https://img.chinatimes.com/newsphoto/2017-05-25/656/a19a00_p_02_02.jpg' },
-  { key: '7', uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0mIVh-vZL8YX7XK9OBGSfxQS5_-6aI0kksUDIRkfD4_56QQOKSw' },
-  { key: '8', uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRXjGshChW7BLaqJ0QYVMHkUufM5udR1w8uD-yEjiGhpJK5-Rs' },
-  { key: '9', uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8eo8HBDp121_uEyFArtVhuUbgc3lHg1aeYUUGAbFIZsn9inWO' }
-]
-
-const chapter = [
-  { chapter: '1', pageNumber: 1, title: '1-1.精氣' },
-  { chapter: '2', pageNumber: 6, title: '2-2.鎮寢之寶' }
-]
 ```
 
-## Custom Your renderItem and getItemLayout
+2. ComicBook Example
 
 ```javascript
-  renderItem = ({ item, index }) => 
-    <View style={styles.view}>
-      <Text>{index + 1}</Text>
-    </View>
 
-  getItemLayout = (data, index) => ({ length: 500, offset: 500*index, index })
+```
+
+## Custom Your renderContent and getContentLayout at same time
+
+- The props as same as `renderItem` `getItemLayout` of FlatList
+
+```javascript
+  renderContent = ({ item, index }) => {
+    // return your content render
+  }
+
+  getContentLayout = (data, index) => { 
+    // return your content layout
+  }
 ```
