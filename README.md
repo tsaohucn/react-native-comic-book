@@ -57,7 +57,9 @@ getContentLayout`required` | Layout of your content | function | none
   - pageNumber : pageNumber of this chapter
   - title : title of this chapter
 
-- content : It depends on your renderContent function that how do you render your each item
+- content : `[{ key: (String)(Reuired)(Unique), ...other }]`
+  - key : unique string key
+  - ...other : It depends on your renderContent function that how do you render your each item
 
 ## Remember custom your renderContent and getContentLayout at same time
 
