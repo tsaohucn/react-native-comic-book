@@ -51,11 +51,13 @@ content | Content of your comic-book | Array[object] | []
 renderContent`required` | How to render your content | function | none
 getContentLayout`required` | Layout of your content | function | none
 
+## Array[object]
+
 - chapter : `[{ pageNumber: (Int)(Reuired)(Unique), title: (String)(Option) }]`
   - pageNumber : pageNumber of this chapter
   - title : title of this chapter
 
-- content : It depends on your renderContent function
+- content : It depends on your renderContent function that how do you render your each item
 
 ## Remember custom your renderContent and getContentLayout at same time
 
