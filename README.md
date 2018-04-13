@@ -10,13 +10,9 @@
 
 `react-native link react-native-gesture-handler`
 
-**IMPORTANT：**
+3. Open your MainActivity.java to change the code to below
 
-Only for Android, react-native-gesture-handler have to do some addition manually installation below, you could reference this [link](https://github.com/kmagiera/react-native-gesture-handler) to get more detail.
-
-Update your main activity (or wherever you create an instance of `ReactActivityDelegate`), so that it overrides the method responsible for creating `ReactRootView` instance. Then use a root view wrapper provided by this library:
 ```java
-// Don't forget imports
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
 import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
@@ -34,6 +30,12 @@ public class MainActivity extends ReactActivity {
     };
   }
 }
+```
+
+4. Open your MainApplication.java to change the code to below
+
+```Java
+  new ScreenBrightnessPackage(1)
 ```
 ## API
 
