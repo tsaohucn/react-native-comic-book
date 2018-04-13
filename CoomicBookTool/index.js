@@ -261,7 +261,7 @@ export default class CoomicBookTool extends Component {
     }
   }
 
-  receiveAnimationEvent = ({showNavigationBar,onEndReceiveEvent}) => {
+  receiveAnimationEvent = ({showNavigationBar,onEndreceiveAnimationEvent}) => {
     if (this.navigationBarIsShow) {
       this.hideNavigationBar()
     } else if (this.optionBarIsShow) {
@@ -274,12 +274,13 @@ export default class CoomicBookTool extends Component {
       this.hideConfigBar()
     } else {
       showNavigationBar && this.showNavigationBar()
-      onEndReceiveEvent && onEndReceiveEvent()
+      onEndreceiveAnimationEvent && onEndreceiveAnimationEvent()
     }
   }
 
   receivePageNumber = pageNumber => {
     this.ProgressBar.receivePageNumber(pageNumber)
+    this.ChapterBar.receivePageNumber(pageNumber)
   }
 
   render() {
@@ -300,6 +301,7 @@ export default class CoomicBookTool extends Component {
           onClickConfigBar={this.onClickConfigBar}
         />
         <ChapterBar
+          ref={ref => this.ChapterBar = ref}
           chapter={this.props.chapter}
           onClickChapterItem={this.props.onClickChapterItem}
           animatedChapterBarX={this.animatedChapterBarX}
@@ -356,7 +358,7 @@ const hideBottomBarY = Platform.OS === 'android' ? 50 : height+50
 
 const hideChapterBarX = Platform.OS === 'android' ? width*2/3 : width*5/3
 
-const hideProgressBarY = Platform.OS === 'android' ? 50 : height+50
+const hideProgressBarY = Platform.OS === 'android' ? 100 : height+100
 
 const hideConfigBarY = Platform.OS === 'android' ? height/2 : height*3/2
 

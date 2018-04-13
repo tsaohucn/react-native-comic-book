@@ -9,8 +9,8 @@ export default class ComicBookSlider extends Component {
     this.state = {
       value: 0,
       opacity: 0,
-      maximumValue: 1 || this.props.maximumValue,
-      chapter: 1
+      //maximumValue: 1 || this.props.maximumValue,
+      //chapter: 1
     }
   }
 
@@ -25,7 +25,7 @@ export default class ComicBookSlider extends Component {
   }
 
   onSlidingComplete = value => {
-    this.setState({ opacity: 0 }) 
+    //this.setState({ opacity: 0 }) 
     this.props.onSlidingComplete && this.props.onSlidingComplete(value)
   }
 
@@ -33,24 +33,18 @@ export default class ComicBookSlider extends Component {
     this.setState({value},done)    
   }
 
-  setChapterMaximumValue = (maximumValue,chapter) => {
-    this.setState({maximumValue,chapter})   
-  }
+  //setChapterMaximumValue = (maximumValue,chapter) => {
+  //  this.setState({maximumValue,chapter})   
+  //}
 
   render() {
     return(
       <View style={styles.renderSliderBar}>
-       { this.props.showIndicator && Platform.OS === 'ios' &&
-          <View style={[styles.indicator,{opacity: this.state.opacity}]}>
-            <Text style={styles.text}>{'第' + this.state.chapter + '話'}</Text>
-            <Text style={styles.text}>{(this.state.value + 1) + '/' + (this.state.maximumValue + 1)}</Text>
-          </View>
-        }
         <Slider
           {...this.props}
           trackStyle={styles.trackStyle}
           value={this.state.value}
-          maximumValue={this.state.maximumValue}
+          maximumValue={this.props.maximumValue}
           minimumValue={0}
           onSlidingStart={this.onSlidingStart}
           onValueChange={this.onValueChange} 
@@ -85,3 +79,13 @@ const styles = StyleSheet.create({
     color: 'white'
   }  
 })
+
+/*
+
+       { this.props.showIndicator && Platform.OS === 'ios' &&
+          <View style={[styles.indicator,{opacity: this.state.opacity}]}>
+            <Text style={styles.text}>{'第' + this.state.chapter + '話'}</Text>
+            <Text style={styles.text}>{(this.state.value + 1) + '/' + (this.state.maximumValue + 1)}</Text>
+          </View>
+        }
+*/
