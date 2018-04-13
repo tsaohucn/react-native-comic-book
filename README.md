@@ -64,7 +64,7 @@ getItemLayout | your comic-book itemLayout | function
 
 1. Novel Example
 
-```Javascript
+```JSX
 import React, { Component } from 'react'
 import { 
   View, 
@@ -215,15 +215,15 @@ const styles = {
 
 2. ComicBook Example
 
-```javascript
+```JSX
 
 ```
 
-## Custom Your renderContent and getContentLayout at same time
+## Remember custom your renderContent and getContentLayout at same time
 
 - The props as same as `renderItem` `getItemLayout` of FlatList
 
-```javascript
+```JSX
   renderContent = ({ item, index }) => {
     // return your content render
   }
