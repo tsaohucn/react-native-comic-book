@@ -39,17 +39,17 @@ public class MainActivity extends ReactActivity {
 
  Props | Description | Type | Default
 ------ | ------ | ------ | ------
-onClickBackArrow | Fired after you click back-arrow icon。 | function | none
-onEndComicBook | Fired after end of your comic-book。 | function | none
-noPreviousChapter | Fired when you click `PreviousChapter` button but there's no any previous chapter。 | function | none
-noNextChapter | Fired when you click `NextChapter` button but there's no any next chapter。 | function | none
-noPreviousPageNumber | Fired when you click `TopArea` to page up but it's alerady in the first page with no previous page。 | function | none
-noNextPageNumber | Fired when you click `BottomArea` to page down but it's alerady in the last page with no next page。 | function | none
-initialPageNumber| Initial page number of your comic-book。 | Integer | 1
-chapter | Chapter structure of your comic-book。 | Array[object] | []
-content | Content of your comic-book。 | Array[object] | []
-renderContent | How to render your content。The props is `required` | function | none
-getContentLayout | Layout of your content。The props is `required` | function | none
+onClickBackArrow | Fired after you click back-arrow icon | function | none
+onEndComicBook | Fired after end of your comic-book | function | none
+noPreviousChapter | Fired when you click `PreviousChapter` button but there's no any previous chapter | function | none
+noNextChapter | Fired when you click `NextChapter` button but there's no any next chapter | function | none
+noPreviousPageNumber | Fired when you click `TopArea` to page up but it's alerady in the first page with no previous page | function | none
+noNextPageNumber | Fired when you click `BottomArea` to page down but it's alerady in the last page with no next page | function | none
+initialPageNumber| Initial page number of your comic-book | Integer | 1
+chapter | Chapter structure of your comic-book | Array[object] | []
+content | Content of your comic-book | Array[object] | []
+renderContent`required` | How to render your content | function | none
+getContentLayout`required` | Layout of your content | function | none
 
 - chapter : `[{ pageNumber: (Int)(Reuired)(Unique), title: (String)(Option) }]`
   - pageNumber : pageNumber of this chapter
