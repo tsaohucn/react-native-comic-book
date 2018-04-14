@@ -7,9 +7,7 @@ import {
   Dimensions, 
   TouchableWithoutFeedback 
 } from 'react-native'
-import { Icon } from 'react-native-elements'
-import { Slider } from 'react-native-elements'
-
+import { Icon, Slider } from 'react-native-elements'
 
 export default class ProgressBar extends Component {
 
@@ -63,7 +61,9 @@ export default class ProgressBar extends Component {
         ]}]}
       >
           <View style={styles.columnOne}>
-            <Text style={styles.text}>{this.state.value + 1 + '/' + this.props.finalPageNumber}</Text>
+            <View style={styles.indicator}>
+              <Text style={styles.text}>{this.state.value + 1 + '/' + this.props.finalPageNumber}</Text>
+            </View>
           </View>
           <View style={styles.columnTwo}>
             <TouchableWithoutFeedback
@@ -74,6 +74,7 @@ export default class ProgressBar extends Component {
                   name='page-first'
                   type='material-community'
                   color='white'
+                  size={30}
                 />
               </View>
             </TouchableWithoutFeedback>
@@ -85,6 +86,8 @@ export default class ProgressBar extends Component {
                 step={1}
                 maximumValue={this.props.finalPageNumber - 1}
                 style={styles.slider}
+                trackStyle={styles.trackStyle}
+                thumbStyle={thumbStyle}
                 minimumTrackTintColor={'white'}
                 maximumTrackTintColor={'grey'}
                 thumbTintColor={'white'}
@@ -97,6 +100,7 @@ export default class ProgressBar extends Component {
                   name='page-last'
                   type='material-community'
                   color='white'
+                  size={30}
                 />
               </View>
             </TouchableWithoutFeedback>
@@ -109,13 +113,18 @@ export default class ProgressBar extends Component {
 
 const { width, height } = Dimensions.get('window')
 
+const thumbStyle = {
+  transform: [
+    { translateY: -1.5 }
+  ]
+}
+
 const styles = StyleSheet.create({
   animated: {
     position: 'absolute',
     bottom: 0,
     width,
-    height: 100,   
-    backgroundColor: 'rgba(52, 52, 52, 0.8)'
+    height: 100
   },
   columnOne: {
     flex: 1,
@@ -126,17 +135,32 @@ const styles = StyleSheet.create({
   columnTwo: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: 'rgba(52, 52, 52, 0.8)'
   },
   slider: {
-    width: width*5/7
+    width: width*5/7,
+    justifyContent: 'center'
   },
   iconView: {
     flex: 1
   },
   text: {
-    fontSize: 20,
-    color: 'white',
-    padding: 10
+    fontSize: 15,
+    color: 'white'
+  },
+  indicator: {
+    position: 'absolute',
+    backgroundColor: 'rgba(52, 52, 52, 0.8)',
+    width: 80, 
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 15,
+    left: width*1/7
+  },
+  trackStyle: {
+    height: 1,
+    justifyContent: 'center'
   }
 })
