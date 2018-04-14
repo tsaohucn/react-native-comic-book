@@ -216,7 +216,6 @@ const styles = {
   },
   content: {
     backgroundColor: 'white', 
-    borderBottomWidth: 1, 
     height: 500
   },
   pageNumber: {
