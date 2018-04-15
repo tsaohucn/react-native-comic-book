@@ -74,6 +74,13 @@ getContentLayout`required` | Layout of your content | function | none
 
   getContentLayout = (data, index) => { 
     // return your content layout
+    if (index >= 0) {
+      return { length: `your item length of this index`, offset: `your item offset of this index`, index }
+    } else {
+      return { length: 0, offset: 0, index } 
+      // Add this line because initialPageNumber will cause index < 0 bug now
+      // https://github.com/facebook/react-native/issues/18743
+    }
   }
 ```
 
