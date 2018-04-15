@@ -234,7 +234,7 @@ ComicBook.propTypes = {
 ComicBook.defaultProps = {
   content: [],
   chapter: [],
-  startPageNumber: 1
+  initialPageNumber: 1
 }
 
 const { width, height } = Dimensions.get('window')
