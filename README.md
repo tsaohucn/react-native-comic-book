@@ -67,22 +67,22 @@ getContentLayout`required` | Layout of your content | function | none
 
 - The props as same as `renderItem` `getItemLayout` of FlatList
 
-	```JSX
-	  renderContent = ({ item, index }) => {
-	    // return your content render
-	  }
-	
-	  getContentLayout = (data, index) => { 
-	    // return your content layout
-	    if (index >= 0) {
-	      return { length: `your item length of this index`, offset: `your item offset of this index`, index }
-	    } else {
-	      return { length: 0, offset: 0, index } 
-	      // Add this line because initialPageNumber will cause index < 0 bug now
-	      // https://github.com/facebook/react-native/issues/18743
-	    }
-	  }
-	```
+```JSX
+renderContent = ({ item, index }) => {
+  // return your content render
+}
+
+getContentLayout = (data, index) => { 
+  // return your content layout
+  if (index >= 0) {
+    return { length: this.length[index], offset: this.offset[index], index }
+  } else {
+    return { length: 0, offset: 0, index } 
+    // Add this line because initialPageNumber will cause index < 0 bug now
+    // https://github.com/facebook/react-native/issues/18743
+  }
+}
+```
 
 ## Usage example
 
