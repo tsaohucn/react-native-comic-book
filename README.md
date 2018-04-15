@@ -75,7 +75,7 @@ renderContent = ({ item, index }) => {
 getContentLayout = (data, index) => { 
   // return your content layout
   if (index >= 0) {
-    return { length: this.length[index], offset: this.offset[index], index }
+    return { length: `your item length of this index`, offset: `your item offset of this index`, index }
   } else {
     return { length: 0, offset: 0, index } 
     // Add this line because initialPageNumber will cause index < 0 bug now
