@@ -284,15 +284,16 @@ class ComicBookScreen extends Component {
       await Image.getSize(ele.uri,(imageWidth, imageHeight) => {
         if (imageWidth && imageHeight) {
           scaleImageHeight = width*imageHeight/imageWidth
+          console.log(scaleImageHeight)
         }
       },() => {
         scaleImageHeight = width
       })
       return scaleImageHeight
     })
+    
     Promise.all(scaleImageHeightPromise).then(value => {
       this.length = value
-    }).then(() => {
       let offset = 0
       this.offset = this.length.map(lenght => {
         offset += lenght
@@ -368,7 +369,7 @@ class ComicBookScreen extends Component {
             content={content}
             renderContent={this.renderContent}
             getContentLayout={this.getContentLayout}
-            initialPageNumber={50}
+            initialPageNumber={5}
             chapter={chapter}
           />
         }
@@ -408,8 +409,8 @@ const content = Array(500).fill().map((e,index) => {
 
   return({ 
     key: index.toString(),
-    //uri: 'http://via.placeholder.com/' + randomWidth + 'x' + randomHeight
-    uri: 'https://picsum.photos/'+ randomWidth + '/' + randomHeight + '?image=' + index,
+    uri: 'https://via.placeholder.com/' + randomWidth + 'x' + randomHeight
+    //uri: 'https://picsum.photos/'+ randomWidth + '/' + randomHeight + '?image=' + index,
   })
 })
 
