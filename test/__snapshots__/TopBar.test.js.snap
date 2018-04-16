@@ -1,0 +1,199 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing TopBar component renders correctly with animatedTopBarY value 1`] = `
+<View
+  collapsable={undefined}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "rgba(52, 52, 52, 0.8)",
+      "flexDirection": "row",
+      "height": 50,
+      "justifyContent": "space-between",
+      "position": "absolute",
+      "top": 0,
+      "transform": Array [
+        Object {
+          "translateY": 100,
+        },
+      ],
+      "width": 750,
+    }
+  }
+>
+  <View
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "height": 50,
+        "justifyContent": "center",
+      }
+    }
+    testID={undefined}
+  >
+    <Icon
+      color="white"
+      iconStyle={
+        Object {
+          "paddingLeft": 10,
+          "paddingRight": 10,
+        }
+      }
+      name="arrow-left"
+      type="material-community"
+    />
+  </View>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "color": "white",
+      }
+    }
+  >
+    第一話
+  </Text>
+  <View
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={undefined}
+    testID={undefined}
+  >
+    <Icon
+      color="white"
+      iconStyle={
+        Object {
+          "paddingLeft": 10,
+          "paddingRight": 10,
+        }
+      }
+      name="dots-horizontal"
+      type="material-community"
+    />
+  </View>
+</View>
+`;
+
+exports[`Testing TopBar component renders correctly with no props 1`] = `
+<View
+  collapsable={undefined}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "rgba(52, 52, 52, 0.8)",
+      "flexDirection": "row",
+      "height": 50,
+      "justifyContent": "space-between",
+      "position": "absolute",
+      "top": 0,
+      "transform": Array [
+        Object {
+          "translateY": 0,
+        },
+      ],
+      "width": 750,
+    }
+  }
+>
+  <View
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "height": 50,
+        "justifyContent": "center",
+      }
+    }
+    testID={undefined}
+  >
+    <Icon
+      color="white"
+      iconStyle={
+        Object {
+          "paddingLeft": 10,
+          "paddingRight": 10,
+        }
+      }
+      name="arrow-left"
+      type="material-community"
+    />
+  </View>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "color": "white",
+      }
+    }
+  >
+    第一話
+  </Text>
+  <View
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={undefined}
+    testID={undefined}
+  >
+    <Icon
+      color="white"
+      iconStyle={
+        Object {
+          "paddingLeft": 10,
+          "paddingRight": 10,
+        }
+      }
+      name="dots-horizontal"
+      type="material-community"
+    />
+  </View>
+</View>
+`;

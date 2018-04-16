@@ -8,9 +8,9 @@ import {
   TouchableWithoutFeedback 
 } from 'react-native'
 import { Icon } from 'react-native-elements'
+import PropTypes from "prop-types"
 
 const TopBar = ({ animatedTopBarY, onClickBackArrow, onClickOptionBar }) => (
-  <View>
   <Animated.View style={[styles.topToolBarAnimated,{
     transform: [
       { translateY: animatedTopBarY  }
@@ -42,7 +42,6 @@ const TopBar = ({ animatedTopBarY, onClickBackArrow, onClickOptionBar }) => (
       </View>
     </TouchableWithoutFeedback>
   </Animated.View>
-  </View>
 )
 
 const { width, height } = Dimensions.get('window')
@@ -70,5 +69,15 @@ const styles = StyleSheet.create({
      paddingRight: 10
   }
 })
+
+TopBar.propTypes = {
+  animatedTopBarY: PropTypes.number,
+  onClickBackArrow: PropTypes.func,
+  onClickOptionBar: PropTypes.func
+};
+
+TopBar.defaultProps = {
+  animatedTopBarY: 0
+};
 
 export default TopBar
