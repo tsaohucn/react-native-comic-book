@@ -279,6 +279,8 @@ class ComicBookScreen extends Component {
   }
 
   componentDidMount() {
+    // this part may exist some issue on ios now
+    // https://github.com/facebook/react-native/pull/18875
     const scaleImageHeightPromise = content.map(async (ele,index) => {
       let scaleImageHeight = width
       await Image.getSize(ele.uri,(imageWidth, imageHeight) => {
