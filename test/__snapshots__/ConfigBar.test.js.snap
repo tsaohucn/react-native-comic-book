@@ -1,0 +1,795 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing ConfigBar component renders correctly with animatedConfigBarY value 1`] = `
+<View
+  collapsable={undefined}
+  style={
+    Object {
+      "backgroundColor": "rgba(52, 52, 52, 0.8)",
+      "bottom": 0,
+      "height": 667,
+      "position": "absolute",
+      "transform": Array [
+        Object {
+          "translateY": 100,
+        },
+      ],
+      "width": 750,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+        "paddingLeft": 10,
+        "paddingRight": 10,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 2,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "white",
+          }
+        }
+      >
+        亮度調節
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "flex": 1,
+          "paddingTop": 2,
+        }
+      }
+    >
+      <Icon
+        color="white"
+        name="decagram"
+        type="material-community"
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "flex": 7,
+          "paddingTop": 0,
+        }
+      }
+    >
+      <ComicBookSlider
+        onValueChange={undefined}
+        style={
+          Object {
+            "width": 428.57142857142856,
+          }
+        }
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "flex": 1,
+          "paddingTop": 2,
+        }
+      }
+    >
+      <Icon
+        color="white"
+        name="decagram-outline"
+        type="material-community"
+      />
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+        "paddingLeft": 10,
+        "paddingRight": 10,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "white",
+          }
+        }
+      >
+        閱讀模式
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "borderColor": "white",
+          "borderRadius": 5,
+          "borderWidth": 1,
+          "flex": 1,
+          "height": 133.4,
+          "justifyContent": "center",
+          "marginRight": 5,
+        }
+      }
+    >
+      <Icon
+        color="white"
+        name="book-open"
+        type="material-community"
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "white",
+          }
+        }
+      >
+        普通模式
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "borderColor": "white",
+          "borderRadius": 5,
+          "borderWidth": 1,
+          "flex": 1,
+          "height": 133.4,
+          "justifyContent": "center",
+          "marginRight": 5,
+        }
+      }
+    >
+      <Icon
+        color="white"
+        name="book-open-page-variant"
+        type="material-community"
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "white",
+          }
+        }
+      >
+        日漫模式
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "borderColor": "white",
+          "borderRadius": 5,
+          "borderWidth": 1,
+          "flex": 1,
+          "height": 133.4,
+          "justifyContent": "center",
+          "marginRight": 5,
+        }
+      }
+    >
+      <Icon
+        color="white"
+        name="book-open-variant"
+        type="material-community"
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "white",
+          }
+        }
+      >
+        捲軸模式
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "borderColor": "white",
+          "borderRadius": 5,
+          "borderWidth": 0,
+          "flex": 1,
+          "height": 133.4,
+          "justifyContent": "center",
+          "marginRight": 5,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+        "paddingLeft": 10,
+        "paddingRight": 10,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "white",
+          }
+        }
+      >
+        橫豎屏
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "borderColor": "white",
+          "borderRadius": 5,
+          "borderWidth": 1,
+          "flex": 1,
+          "height": 133.4,
+          "justifyContent": "center",
+          "marginRight": 5,
+        }
+      }
+    >
+      <Icon
+        color="white"
+        name="desktop-mac"
+        type="material-community"
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "white",
+          }
+        }
+      >
+        橫屏
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "borderColor": "white",
+          "borderRadius": 5,
+          "borderWidth": 1,
+          "flex": 1,
+          "height": 133.4,
+          "justifyContent": "center",
+          "marginRight": 5,
+        }
+      }
+    >
+      <Icon
+        color="white"
+        name="desktop-classic"
+        type="material-community"
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "white",
+          }
+        }
+      >
+        豎屏
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "borderColor": "white",
+          "borderRadius": 5,
+          "borderWidth": 0,
+          "flex": 1,
+          "height": 133.4,
+          "justifyContent": "center",
+          "marginRight": 5,
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "borderColor": "white",
+          "borderRadius": 5,
+          "borderWidth": 0,
+          "flex": 1,
+          "height": 133.4,
+          "justifyContent": "center",
+          "marginRight": 5,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+        "paddingLeft": 10,
+        "paddingRight": 10,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "white",
+          }
+        }
+      >
+        顯示單章節評論
+      </Text>
+    </View>
+    <ComicBookSwitch />
+  </View>
+</View>
+`;
+
+exports[`Testing ConfigBar component renders correctly with no props 1`] = `
+<View
+  collapsable={undefined}
+  style={
+    Object {
+      "backgroundColor": "rgba(52, 52, 52, 0.8)",
+      "bottom": 0,
+      "height": 667,
+      "position": "absolute",
+      "transform": Array [
+        Object {
+          "translateY": undefined,
+        },
+      ],
+      "width": 750,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+        "paddingLeft": 10,
+        "paddingRight": 10,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 2,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "white",
+          }
+        }
+      >
+        亮度調節
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "flex": 1,
+          "paddingTop": 2,
+        }
+      }
+    >
+      <Icon
+        color="white"
+        name="decagram"
+        type="material-community"
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "flex": 7,
+          "paddingTop": 0,
+        }
+      }
+    >
+      <ComicBookSlider
+        onValueChange={undefined}
+        style={
+          Object {
+            "width": 428.57142857142856,
+          }
+        }
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "flex": 1,
+          "paddingTop": 2,
+        }
+      }
+    >
+      <Icon
+        color="white"
+        name="decagram-outline"
+        type="material-community"
+      />
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+        "paddingLeft": 10,
+        "paddingRight": 10,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "white",
+          }
+        }
+      >
+        閱讀模式
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "borderColor": "white",
+          "borderRadius": 5,
+          "borderWidth": 1,
+          "flex": 1,
+          "height": 133.4,
+          "justifyContent": "center",
+          "marginRight": 5,
+        }
+      }
+    >
+      <Icon
+        color="white"
+        name="book-open"
+        type="material-community"
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "white",
+          }
+        }
+      >
+        普通模式
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "borderColor": "white",
+          "borderRadius": 5,
+          "borderWidth": 1,
+          "flex": 1,
+          "height": 133.4,
+          "justifyContent": "center",
+          "marginRight": 5,
+        }
+      }
+    >
+      <Icon
+        color="white"
+        name="book-open-page-variant"
+        type="material-community"
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "white",
+          }
+        }
+      >
+        日漫模式
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "borderColor": "white",
+          "borderRadius": 5,
+          "borderWidth": 1,
+          "flex": 1,
+          "height": 133.4,
+          "justifyContent": "center",
+          "marginRight": 5,
+        }
+      }
+    >
+      <Icon
+        color="white"
+        name="book-open-variant"
+        type="material-community"
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "white",
+          }
+        }
+      >
+        捲軸模式
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "borderColor": "white",
+          "borderRadius": 5,
+          "borderWidth": 0,
+          "flex": 1,
+          "height": 133.4,
+          "justifyContent": "center",
+          "marginRight": 5,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+        "paddingLeft": 10,
+        "paddingRight": 10,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "white",
+          }
+        }
+      >
+        橫豎屏
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "borderColor": "white",
+          "borderRadius": 5,
+          "borderWidth": 1,
+          "flex": 1,
+          "height": 133.4,
+          "justifyContent": "center",
+          "marginRight": 5,
+        }
+      }
+    >
+      <Icon
+        color="white"
+        name="desktop-mac"
+        type="material-community"
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "white",
+          }
+        }
+      >
+        橫屏
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "borderColor": "white",
+          "borderRadius": 5,
+          "borderWidth": 1,
+          "flex": 1,
+          "height": 133.4,
+          "justifyContent": "center",
+          "marginRight": 5,
+        }
+      }
+    >
+      <Icon
+        color="white"
+        name="desktop-classic"
+        type="material-community"
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "white",
+          }
+        }
+      >
+        豎屏
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "borderColor": "white",
+          "borderRadius": 5,
+          "borderWidth": 0,
+          "flex": 1,
+          "height": 133.4,
+          "justifyContent": "center",
+          "marginRight": 5,
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "borderColor": "white",
+          "borderRadius": 5,
+          "borderWidth": 0,
+          "flex": 1,
+          "height": 133.4,
+          "justifyContent": "center",
+          "marginRight": 5,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+        "paddingLeft": 10,
+        "paddingRight": 10,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "white",
+          }
+        }
+      >
+        顯示單章節評論
+      </Text>
+    </View>
+    <ComicBookSwitch />
+  </View>
+</View>
+`;

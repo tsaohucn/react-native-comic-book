@@ -1,0 +1,317 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing ProgressBar component renders correctly with animatedProgressBarY value 1`] = `
+<View
+  collapsable={undefined}
+  style={
+    Object {
+      "bottom": 0,
+      "height": 100,
+      "position": "absolute",
+      "transform": Array [
+        Object {
+          "translateY": 100,
+        },
+      ],
+      "width": 750,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+        "justifyContent": "center",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "rgba(52, 52, 52, 0.8)",
+          "borderRadius": 15,
+          "height": 40,
+          "justifyContent": "center",
+          "left": 107.14285714285714,
+          "position": "absolute",
+          "width": 80,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "white",
+            "fontSize": 15,
+          }
+        }
+      >
+        1/undefined
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "rgba(52, 52, 52, 0.8)",
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      hitSlop={undefined}
+      nativeID={undefined}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+      testID={undefined}
+    >
+      <Icon
+        color="white"
+        name="page-first"
+        size={30}
+        type="material-community"
+      />
+    </View>
+    <Slider
+      maximumTrackTintColor="grey"
+      maximumValue={NaN}
+      minimumTrackTintColor="white"
+      onSlidingComplete={[Function]}
+      onSlidingStart={undefined}
+      onValueChange={[Function]}
+      step={1}
+      style={
+        Object {
+          "justifyContent": "center",
+          "width": 535.7142857142857,
+        }
+      }
+      thumbStyle={
+        Object {
+          "transform": Array [
+            Object {
+              "translateY": -1.5,
+            },
+          ],
+        }
+      }
+      thumbTintColor="white"
+      trackStyle={
+        Object {
+          "height": 1,
+          "justifyContent": "center",
+        }
+      }
+      value={0}
+    />
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      hitSlop={undefined}
+      nativeID={undefined}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+      testID={undefined}
+    >
+      <Icon
+        color="white"
+        name="page-last"
+        size={30}
+        type="material-community"
+      />
+    </View>
+  </View>
+</View>
+`;
+
+exports[`Testing ProgressBar component renders correctly with no props 1`] = `
+<View
+  collapsable={undefined}
+  style={
+    Object {
+      "bottom": 0,
+      "height": 100,
+      "position": "absolute",
+      "transform": Array [
+        Object {
+          "translateY": undefined,
+        },
+      ],
+      "width": 750,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+        "justifyContent": "center",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "rgba(52, 52, 52, 0.8)",
+          "borderRadius": 15,
+          "height": 40,
+          "justifyContent": "center",
+          "left": 107.14285714285714,
+          "position": "absolute",
+          "width": 80,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "white",
+            "fontSize": 15,
+          }
+        }
+      >
+        1/undefined
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "rgba(52, 52, 52, 0.8)",
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      hitSlop={undefined}
+      nativeID={undefined}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+      testID={undefined}
+    >
+      <Icon
+        color="white"
+        name="page-first"
+        size={30}
+        type="material-community"
+      />
+    </View>
+    <Slider
+      maximumTrackTintColor="grey"
+      maximumValue={NaN}
+      minimumTrackTintColor="white"
+      onSlidingComplete={[Function]}
+      onSlidingStart={undefined}
+      onValueChange={[Function]}
+      step={1}
+      style={
+        Object {
+          "justifyContent": "center",
+          "width": 535.7142857142857,
+        }
+      }
+      thumbStyle={
+        Object {
+          "transform": Array [
+            Object {
+              "translateY": -1.5,
+            },
+          ],
+        }
+      }
+      thumbTintColor="white"
+      trackStyle={
+        Object {
+          "height": 1,
+          "justifyContent": "center",
+        }
+      }
+      value={0}
+    />
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      hitSlop={undefined}
+      nativeID={undefined}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+      testID={undefined}
+    >
+      <Icon
+        color="white"
+        name="page-last"
+        size={30}
+        type="material-community"
+      />
+    </View>
+  </View>
+</View>
+`;
