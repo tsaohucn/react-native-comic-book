@@ -7,8 +7,8 @@ import {
   Dimensions, 
   TouchableWithoutFeedback 
 } from 'react-native'
-import { Icon } from 'react-native-elements'
 import PropTypes from "prop-types"
+import { Icon } from 'react-native-elements'
 
 const TopBar = ({ animatedTopBarY, onClickBackArrow, onClickOptionBar }) => (
   <Animated.View style={[styles.topToolBarAnimated,{

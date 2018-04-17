@@ -5,8 +5,10 @@ import {
   Text, 
   Animated, 
   Dimensions, 
-  TouchableWithoutFeedback 
+  TouchableWithoutFeedback,
+  Platform 
 } from 'react-native'
+import PropTypes from "prop-types"
 import { Icon } from 'react-native-elements'
 import ComicBookBrightness from './ComicBookBrightness'
 
@@ -88,5 +90,16 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   }
 })
+
+BottomBar.propTypes = {
+  animatedBottomBarY: PropTypes.number,
+  onClickChapterBar: PropTypes.func,
+  onClickProgressBar: PropTypes.func,
+  onClickConfigBar: PropTypes.func
+};
+
+BottomBar.defaultProps = {
+  animatedBottomBarY: Platform.OS === 'android' ? 0 : height
+};
 
 export default BottomBar
