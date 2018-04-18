@@ -20,10 +20,13 @@
   "devDependencies": {
     "babel-jest": "22.4.3",
     "babel-preset-react-native": "4.0.0",
-    "jest": "22.4.3",
-    "react-test-renderer": "16.3.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "jest": "^22.4.3",
     "react": "16.3.1",
-    "react-native": "0.55.1"
+    "react-dom": "^16.3.2",
+    "react-native": "0.55.1",
+    "react-test-renderer": "16.3.1"
   },
   "peerDependencies": {
     "react": "16.3.1",
