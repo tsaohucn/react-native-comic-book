@@ -287,6 +287,7 @@ export default class CoomicBookTool extends Component {
     return(
       <View style={styles.view}>
         <TopBar
+          title={this.props.title}
           onClickBackArrow={this.props.onClickBackArrow}
           animatedTopBarY={this.animatedTopBarY}
           onClickOptionBar={this.onClickOptionBar}

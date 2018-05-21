@@ -203,6 +203,7 @@ export default class ComicBook extends PureComponent {
         />
         <CoomicBookTool 
           ref= { ref => this.CoomicBookTool = ref }
+          title={this.props.title}
           onClickChapterItem={this.onClickChapterItem}
           onProgressComplete={this.onProgressComplete}
           onClickPreviousChapter={this.onClickPreviousChapter}
@@ -218,6 +219,7 @@ export default class ComicBook extends PureComponent {
 
 
 ComicBook.propTypes = {
+  title: PropTypes.string,
   initialPageNumber: PropTypes.number,
   content: PropTypes.array,
   renderContent: PropTypes.func,

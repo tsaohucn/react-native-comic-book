@@ -10,7 +10,7 @@ import {
 import PropTypes from "prop-types"
 import { Icon } from 'react-native-elements'
 
-const TopBar = ({ animatedTopBarY, onClickBackArrow, onClickOptionBar }) => (
+const TopBar = ({ title, animatedTopBarY, onClickBackArrow, onClickOptionBar }) => (
   <Animated.View style={[styles.topToolBarAnimated,{
     transform: [
       { translateY: animatedTopBarY  }
@@ -28,7 +28,7 @@ const TopBar = ({ animatedTopBarY, onClickBackArrow, onClickOptionBar }) => (
         />
       </View>
     </TouchableWithoutFeedback>
-    <Text style={styles.iconText}>{'第一話'}</Text>
+    <Text style={styles.iconText}>{title}</Text>
     <TouchableWithoutFeedback
       onPress={onClickOptionBar} 
     >
@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
 })
 
 TopBar.propTypes = {
+  title: PropTypes.string,
   animatedTopBarY: PropTypes.instanceOf('Animated'),
   onClickBackArrow: PropTypes.func,
   onClickOptionBar: PropTypes.func
