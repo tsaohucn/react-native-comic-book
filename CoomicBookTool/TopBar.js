@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
 })
 
 TopBar.propTypes = {
-  animatedTopBarY: PropTypes.number,
+  animatedTopBarY: PropTypes.instanceOf('Animated'),
   onClickBackArrow: PropTypes.func,
   onClickOptionBar: PropTypes.func
 };

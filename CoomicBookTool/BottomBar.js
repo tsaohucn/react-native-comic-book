@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
 })
 
 BottomBar.propTypes = {
-  animatedBottomBarY: PropTypes.number,
+  animatedBottomBarY: PropTypes.instanceOf('Animated'),
   onClickChapterBar: PropTypes.func,
   onClickProgressBar: PropTypes.func,
   onClickConfigBar: PropTypes.func
