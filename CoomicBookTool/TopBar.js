@@ -28,7 +28,7 @@ const TopBar = ({ title, animatedTopBarY, onClickBackArrow, onClickOptionBar }) 
         />
       </View>
     </TouchableWithoutFeedback>
-    <Text style={styles.iconText}>{title}</Text>
+    <Text numberOfLines={1} style={styles.iconText}>{title}</Text>
     <TouchableWithoutFeedback
       onPress={onClickOptionBar} 
     >
@@ -48,6 +48,7 @@ const { width, height } = Dimensions.get('window')
 
 const styles = StyleSheet.create({
   iconText: {
+    width: width*0.7,
     color: 'white'
   },
   topToolBarAnimated: {
