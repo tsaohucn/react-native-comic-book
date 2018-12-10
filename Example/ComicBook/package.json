@@ -9,7 +9,7 @@
   "dependencies": {
     "react": "16.3.1",
     "react-native": "0.55.1",
-    "react-native-comic-book": "git+http://192.168.0.200/xc/react-native-comic-book.git",
+    "react-native-comic-book": "tsaohucn/react-native-comic-book.git",
     "react-navigation": "^1.5.11",
     "react-navigation-slide-from-right-transition": "^1.0.4"
   },

@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://192.168.0.200/xc/react-native-comic-book.git"
+    "url": "https://github.com/tsaohucn/react-native-comic-book.git"
   },
   "dependencies": {
     "prop-types": "^15.5.10",
-    "react-native-interactive-flatList": "git+http://192.168.0.200/xc/react-native-interactive-flatList.git",
-    "react-native-screen-brightness": "git@github.com:robinpowered/react-native-screen-brightness.git",
+    "react-native-interactive-flatList": "tsaohucn/react-native-interactive-flatList.git",
+    "react-native-screen-brightness": "robinpowered/react-native-screen-brightness.git",
     "react-native-elements": "^1.0.0-beta3",
     "react-native-vector-icons": "^4.5.0"
   },
@@ -38,10 +38,10 @@
   "author": "Tsao",
   "license": "ISC",
   "bugs": {
-    "url": "http://192.168.0.200/xc/react-native-comic-book/issues"
+    "url": "https://github.com/tsaohucn/react-native-comic-book.git/issues"
   },
   "jest": {
     "preset": "react-native"
   },
-  "homepage": "http://192.168.0.200/xc/react-native-comic-book#readme"
+  "homepage": "https://github.com/tsaohucn/react-native-comic-book.git#readme"
 }
